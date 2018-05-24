@@ -1,0 +1,2 @@
+rootProject.name = 'MoneyTable'
+include 'core', 'desktop'
