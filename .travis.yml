@@ -5,7 +5,7 @@ install: gradle wrapper --gradle-version 4.2
 
 script:
     - gradle assemble
-    - gradle checkout
+    - gradle check
 
 before_cache:
     - rm -f  $HOME/.gradle/caches/modules-2/modules-2.lock
