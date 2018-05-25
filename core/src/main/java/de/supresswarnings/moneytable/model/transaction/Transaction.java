@@ -1,6 +1,6 @@
 package de.supresswarnings.moneytable.model.transaction;
 
-public abstract class Transaction {
+public class Transaction {
     private String name;
     private double amount;
 

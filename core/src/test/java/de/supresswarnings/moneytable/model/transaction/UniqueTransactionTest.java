@@ -7,7 +7,7 @@ public class UniqueTransactionTest extends TransactionTest {
     @Test
     public void test(){
         String name = "test";
-        long time = System.currentTimeMillis();
+        long time = 0;
         double amount = 1.23;
 
         UniqueTransaction transaction = new UniqueTransaction(name, time, amount);
@@ -24,20 +24,5 @@ public class UniqueTransactionTest extends TransactionTest {
 
         test(transaction, name, amount, false);
         Assert.assertEquals(time, transaction.getTime());
-    }
-
-    @Test(expected = TransactionError.class)
-    public void testNameNull(){
-        UniqueTransaction transaction = new UniqueTransaction(null, System.currentTimeMillis(), 1.23);
-    }
-
-    @Test(expected = TransactionError.class)
-    public void testNameEmpty(){
-        UniqueTransaction transaction = new UniqueTransaction("", System.currentTimeMillis(), 1.23);
-    }
-
-    @Test(expected = TransactionError.class)
-    public void testAmountZero(){
-        UniqueTransaction transaction = new UniqueTransaction("test", System.currentTimeMillis(), 0);
     }
 }
