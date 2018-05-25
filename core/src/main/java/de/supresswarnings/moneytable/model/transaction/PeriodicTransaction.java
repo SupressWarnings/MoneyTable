@@ -4,18 +4,11 @@ public class PeriodicTransaction extends Transaction {
 
     private long first;
     private long rate;
-    private boolean automatic;
     private double amount;
 
-    public PeriodicTransaction(String name, long first, long rate, boolean automatic, double amount){
+    public PeriodicTransaction(String name, long first, long rate, double amount){
         super(name, amount);
-        this.first = first;
-        this.rate = rate;
-        this.automatic = automatic;
-        this.amount = amount;
-    }
-
-    public void setFirst(long first) {
+        setRate(rate);
         this.first = first;
     }
 
@@ -26,9 +19,6 @@ public class PeriodicTransaction extends Transaction {
         this.rate = rate;
     }
 
-    public void setAutomatic(boolean automatic) {
-        this.automatic = automatic;
-    }
 
     public long getFirst() {
         return first;
@@ -36,9 +26,5 @@ public class PeriodicTransaction extends Transaction {
 
     public long getRate() {
         return rate;
-    }
-
-    public boolean isAutomatic() {
-        return automatic;
     }
 }

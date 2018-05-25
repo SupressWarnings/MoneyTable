@@ -7,11 +7,11 @@ public class TransactionTest {
 
     @Test
     public void testBasicTransaction(){
-        String name = "test";
+        String name = "testTransaction";
         double amount = 1.23;
 
         Transaction transaction = new Transaction(name, amount);
-        test(transaction, name, amount, true);
+        testTransaction(transaction, name, amount, true);
 
         name = "test2";
         amount = -3.21;
@@ -19,10 +19,10 @@ public class TransactionTest {
         transaction.setName(name);
         transaction.setAmount(amount);
 
-        test(transaction, name, amount, false);
+        testTransaction(transaction, name, amount, false);
     }
 
-    public void test(Transaction transaction, String name, double amount, boolean income){
+    public void testTransaction(Transaction transaction, String name, double amount, boolean income){
         Assert.assertEquals(name, transaction.getName());
         Assert.assertEquals(income, transaction.isIncome());
         Assert.assertEquals(amount, transaction.getAmount(), 0.0);
@@ -40,6 +40,6 @@ public class TransactionTest {
 
     @Test(expected = TransactionError.class)
     public void testAmountZero(){
-        Transaction transaction = new Transaction("test", 0);
+        Transaction transaction = new Transaction("testTransaction", 0);
     }
 }
