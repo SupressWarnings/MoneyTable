@@ -4,8 +4,8 @@ public class UniqueTransaction extends Transaction {
 
     private long time;
 
-    public UniqueTransaction(String name, boolean income, long time, double amount){
-        super(name, amount, income);
+    public UniqueTransaction(String name, long time, double amount){
+        super(name, amount);
         this.time = time;
     }
 

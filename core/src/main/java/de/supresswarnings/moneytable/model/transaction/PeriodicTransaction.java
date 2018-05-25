@@ -7,8 +7,8 @@ public class PeriodicTransaction extends Transaction {
     private boolean automatic;
     private double amount;
 
-    public PeriodicTransaction(String name, boolean income, long first, long rate, boolean automatic, double amount){
-        super(name, amount, income);
+    public PeriodicTransaction(String name, long first, long rate, boolean automatic, double amount){
+        super(name, amount);
         this.first = first;
         this.rate = rate;
         this.automatic = automatic;

@@ -5,8 +5,8 @@ import java.util.ArrayList;
 public class IrregularPeriodicTransaction extends PeriodicTransaction {
     private ArrayList<Double> change;
 
-    public IrregularPeriodicTransaction(String name, boolean income, long first, long rate, boolean automatic, double amount) {
-        super(name, income, first, rate, automatic, amount);
+    public IrregularPeriodicTransaction(String name, long first, long rate, boolean automatic, double amount) {
+        super(name, first, rate, automatic, amount);
         change = new ArrayList<>();
         change.add(0, 0d);
     }

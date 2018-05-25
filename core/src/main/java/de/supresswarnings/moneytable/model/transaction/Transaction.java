@@ -3,12 +3,9 @@ package de.supresswarnings.moneytable.model.transaction;
 public abstract class Transaction {
     private String name;
     private double amount;
-    private boolean income = true;
 
-    Transaction(String name, double amount, boolean income){
-        this.income = true;
+    Transaction(String name, double amount){
         setName(name);
-        setIncome(income);
         setAmount(amount);
     }
 
@@ -26,16 +23,6 @@ public abstract class Transaction {
             throw new TransactionError("Amount can't be zero (Error Code 103.");
         }
         this.amount = amount;
-        if((income && this.amount < 0) || (!income && this.amount > 0)){
-            this.amount *= -1;
-        }
-    }
-
-    public void setIncome(boolean income) {
-        this.income = income;
-        if((income && amount < 0) || (!income && amount > 0)){
-            this.amount *= -1;
-        }
     }
 
     public String getName() {
@@ -47,6 +34,6 @@ public abstract class Transaction {
     }
 
     public boolean isIncome() {
-        return income;
+        return amount > 0;
     }
 }
