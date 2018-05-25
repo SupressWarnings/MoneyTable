@@ -8,8 +8,8 @@ public abstract class Transaction {
     Transaction(String name, double amount, boolean income){
         this.income = true;
         setName(name);
-        setAmount(amount);
         setIncome(income);
+        setAmount(amount);
     }
 
     public void setName(String name){
@@ -26,15 +26,15 @@ public abstract class Transaction {
             throw new TransactionError("Amount can't be zero (Error Code 103.");
         }
         this.amount = amount;
-        if(income && this.amount < 0 || !income && this.amount > 0){
+        if((income && this.amount < 0) || (!income && this.amount > 0)){
             this.amount *= -1;
         }
     }
 
     public void setIncome(boolean income) {
         this.income = income;
-        if(this.income && amount < 0 || !this.income && amount > 0){
-            amount *= -1;
+        if((income && amount < 0) || (!income && amount > 0)){
+            this.amount *= -1;
         }
     }
 
