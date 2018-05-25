@@ -3,9 +3,16 @@ jdk: oraclejdk8
 
 install: gradle wrapper --gradle-version 4.2
 
+addons:
+  sonarcloud:
+    organization: "supresswarnings-github"
+    token:
+          secure: 374acf5862313e5a5a3a054d3974b6fba6af6063
+
 script:
     - gradle assemble
     - gradle check
+    - sonar-scanner
 
 before_cache:
     - rm -f  $HOME/.gradle/caches/modules-2/modules-2.lock
@@ -15,3 +22,6 @@ cache:
     directories:
         - $HOME/.gradle/caches/
         - $HOME/.gradle/wrapper/
+
+notifications:
+email: false
