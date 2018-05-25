@@ -7,7 +7,7 @@ addons:
   sonarcloud:
     organization: "supresswarnings-github"
     token:
-          secure: 374acf5862313e5a5a3a054d3974b6fba6af6063
+          secure: {SONAR_TOKEN}
 
 script:
     - gradle assemble
