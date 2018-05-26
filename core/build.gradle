@@ -8,7 +8,16 @@ repositories {
 
 jacoco {
     toolVersion = "0.8.1"
-    reportsDir = file("$buildDir/customJacocoReportDir")
+    reportsDir = file("$buildDir/jacoco")
+}
+
+jacocoTestReport {
+    reports {
+        xml.enabled true
+        xml.destination file("${buildDir}/jacoco")
+        csv.enabled false
+        html.enabled false
+    }
 }
 
 dependencies {
