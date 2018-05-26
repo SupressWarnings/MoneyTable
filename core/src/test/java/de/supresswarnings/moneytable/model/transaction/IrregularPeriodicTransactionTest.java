@@ -31,6 +31,6 @@ public class IrregularPeriodicTransactionTest extends PeriodicTransactionTest {
     @Test(expected = TransactionError.class)
     public void testTimeError(){
         IrregularPeriodicTransaction transaction = new IrregularPeriodicTransaction("test", 0, 1, 1.23);
-        transaction.setChange(0d, -1);
+        transaction.setChange(1d, -1L);
     }
 }

@@ -26,4 +26,14 @@ public class TransactionGroupTest {
         group.enterTransaction(1.23, 0);
         Assert.assertTrue(group.transactionExists(0));
     }
+
+    @Test(expected = TransactionError.class)
+    public void testNameEmpty(){
+        TransactionGroup group = new TransactionGroup("");
+    }
+
+    @Test(expected = TransactionError.class)
+    public void testNameNull(){
+        TransactionGroup group = new TransactionGroup(null);
+    }
 }
