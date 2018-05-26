@@ -4,7 +4,6 @@ public class PeriodicTransaction extends Transaction {
 
     private long first;
     private long rate;
-    private double amount;
 
     public PeriodicTransaction(String name, long first, long rate, double amount){
         super(name, amount);
