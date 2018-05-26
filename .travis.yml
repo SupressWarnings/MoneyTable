@@ -12,7 +12,7 @@ addons:
 script:
     - gradle assemble
     - gradle check
-    - gradle codeCoverageReports
+    - gradle codeCoverageReport
     - sonar-scanner
 
 after_success:
