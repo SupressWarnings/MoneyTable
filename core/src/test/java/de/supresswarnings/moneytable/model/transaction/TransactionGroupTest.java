@@ -22,6 +22,8 @@ public class TransactionGroupTest {
         Assert.assertEquals(transaction, group.getTransaction(time));
         Assert.assertTrue(group.getTransactions().contains(transaction));
 
+        Assert.assertNull(group.getTransaction(-1L));
+
         time = 0;
         group.enterTransaction(1.23, 0);
         Assert.assertTrue(group.transactionExists(0));
