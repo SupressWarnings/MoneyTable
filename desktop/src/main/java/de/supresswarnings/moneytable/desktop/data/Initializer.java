@@ -1,14 +1,19 @@
 package de.supresswarnings.moneytable.desktop.data;
 
-import java.sql.*;
+import java.sql.Connection;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Statement;
 import java.util.ArrayList;
 
 class Initializer {
 
     private Connection connection;
     private ArrayList<String> tableNames = new ArrayList<>();
-    private String accountTable = "ACCOUNT", transactionTable = "TRANSACTION",
-            transactionGroupTable = "TRANSACTIONGROUP", periodicTranscationTable = "PERIODICTRANSACTION";
+    private String accountTable = "ACCOUNT";
+    private String transactionTable = "TRANSACTION";
+    private String transactionGroupTable = "TRANSACTIONGROUP";
+    private String periodicTranscationTable = "PERIODICTRANSACTION";
 
     Initializer(Connection connection){
         this.connection = connection;
@@ -19,8 +24,7 @@ class Initializer {
     }
 
     void checkTables(){
-        try {
-            Statement statement = connection.createStatement();
+        try (Statement statement = connection.createStatement()){
             ResultSet tables = statement.executeQuery("SHOW TABLES");
             while(tables.next()){
                 tableNames.remove(tables.getString(1));
@@ -35,18 +39,17 @@ class Initializer {
     }
 
     private void createTables(){
-        Statement createStatement = null;
-        try {
-            createStatement = connection.createStatement();
+        try(Statement createStatement = connection.createStatement()) {
+            String statementPart = "CREATE TABLE IF NOT EXISTS ";
 
             if(tableNames.contains(accountTable)){
-                createStatement.execute("CREATE TABLE IF NOT EXISTS " + accountTable + " (id INT AUTO_INCREMENT PRIMARY KEY, " +
+                createStatement.execute( statementPart+ accountTable + " (id INT AUTO_INCREMENT PRIMARY KEY, " +
                                                                                     "name VARCHAR(20) NOT NULL, " +
                                                                                     "current DECIMAL(100,2))");
             }
 
             if(tableNames.contains(transactionTable)){
-                createStatement.execute("CREATE TABLE IF NOT EXISTS " + transactionTable + "(id INT AUTO_INCREMENT PRIMARY KEY, " +
+                createStatement.execute(statementPart + transactionTable + "(id INT AUTO_INCREMENT PRIMARY KEY, " +
                                                                                         "name VARCHAR(20) NOT NULL, " +
                                                                                         "amount DECIMAL(100,2) NOT NULL, " +
                                                                                         "time INT NOT NULL, " +
@@ -55,30 +58,21 @@ class Initializer {
             }
 
             if(tableNames.contains(transactionGroupTable)){
-                createStatement.execute("CREATE TABLE IF NOT EXISTS " + transactionGroupTable + "(id INT AUTO_INCREMENT, " +
+                createStatement.execute(statementPart + transactionGroupTable + "(id INT AUTO_INCREMENT, " +
                                                                                         "name VARCHAR(20) NOT NULL, " +
                                                                                         "account INT NOT NULL)");
             }
 
             if(tableNames.contains(periodicTranscationTable)){
-                createStatement.execute("CREATE TABLE IF NOT EXISTS " + periodicTranscationTable + "(id INT AUTO_INCREMENT, " +
+                createStatement.execute(statementPart + periodicTranscationTable + "(id INT AUTO_INCREMENT, " +
                                                                                         "transaction INT NOT NULL, " +
                                                                                         "rate MEDIUMINT NOT NULL, " +
                                                                                         "account INT NOT NULL, " +
                                                                                         "last INT UNSIGNED)");
             }
         } catch (SQLException e) {
-            System.err.println("Error Code 702 (Can't create statement).");
+            System.err.println("Error Code 702 (Can't create tables).");
             e.printStackTrace();
-        }finally {
-            if(createStatement != null){
-                try {
-                    createStatement.close();
-                } catch (SQLException e) {
-                    System.err.println("Error Code 703 (Can't close statement).");
-                    e.printStackTrace();
-                }
-            }
         }
     }
 }
