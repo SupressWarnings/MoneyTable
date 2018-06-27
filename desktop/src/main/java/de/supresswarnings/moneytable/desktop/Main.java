@@ -8,8 +8,10 @@ public class Main {
             System.err.println("Error Code 501 (Class not found).");
             e.printStackTrace();
         }
-        if("-d".equals(args[0])){
-            System.out.println("true");
+        if(args != null){
+            if("-d".equals(args[0])){
+                System.out.println("true");
+            }
         }
     }
 }
