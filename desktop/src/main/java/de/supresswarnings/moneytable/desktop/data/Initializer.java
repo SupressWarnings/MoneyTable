@@ -32,8 +32,9 @@ class Initializer {
             if(!tableNames.isEmpty()){
                 createTables();
             }
+            tables.close();
         } catch (SQLException e) {
-            System.out.println("Error Code 701 (Metadata could not be retrieved).");
+            System.out.println("Error Code 701 (Table names could not be retrieved).");
             e.printStackTrace();
         }
     }

@@ -24,6 +24,7 @@ public class InitializerTest {
             Initializer initializer = new Initializer(connection);
             initializer.checkTables();
 
+            initializer.checkTables();
             Statement statement = connection.createStatement();
             ResultSet tables = statement.executeQuery("SHOW TABLES");
             while(tables.next()){
