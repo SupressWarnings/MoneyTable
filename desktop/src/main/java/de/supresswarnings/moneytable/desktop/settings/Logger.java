@@ -12,7 +12,6 @@ public class Logger {
         log = "";
         logFile = new File(System.getProperty("user.home") + "/.moneytable/logging/log.txt");
         if(!logFile.exists()){
-            System.out.println("hi");
             logFile.getParentFile().mkdirs();
             try {
                 logFile.createNewFile();
@@ -21,7 +20,7 @@ public class Logger {
             }
         }else{
             try (PrintWriter writer = new PrintWriter(new FileOutputStream(logFile, false))){
-                System.out.println("Log file cleared");
+                writer.write("");
             } catch (FileNotFoundException e) {
                 e.printStackTrace();
             }
