@@ -14,25 +14,25 @@ public class Database {
         String path = System.getProperty("user.home") + "/.moneytable/database";
         try {
             connection = DriverManager.getConnection("jdbc:h2:" + path, "", "");
-            Main.logger.log("INFO: Database connection established.");
+            Main.LOGGER.log("INFO: Database connection established.");
             Initializer initializer = new Initializer(connection);
             initializer.checkTables();
-            Main.logger.log("INFO: Database initialization completed");
+            Main.LOGGER.log("INFO: Database initialization completed");
         } catch (SQLException e) {
-            Main.logger.log("Error Code 601 (Database Connection error).");
-            Main.logger.log(e.getMessage());
-            Main.logger.writeLog();
+            Main.LOGGER.log("Error Code 601 (Database Connection error).");
+            Main.LOGGER.log(e.getMessage());
+            Main.LOGGER.writeLog();
         }
     }
 
     public void dispose(){
         try {
             connection.close();
-            Main.logger.log("INFO: Database connection closed.");
+            Main.LOGGER.log("INFO: Database connection closed.");
         } catch (SQLException e) {
-            Main.logger.log("Error Code 602 (Database connection not closed properly).");
-            Main.logger.log(e.getMessage());
-            Main.logger.writeLog();
+            Main.LOGGER.log("Error Code 602 (Database connection not closed properly).");
+            Main.LOGGER.log(e.getMessage());
+            Main.LOGGER.writeLog();
         }
     }
 }

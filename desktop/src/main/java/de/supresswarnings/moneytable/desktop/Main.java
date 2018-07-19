@@ -3,14 +3,14 @@ package de.supresswarnings.moneytable.desktop;
 import de.supresswarnings.moneytable.desktop.settings.Logger;
 
 public class Main {
-    public static Logger logger = new Logger();
+    public final static Logger LOGGER = new Logger();
 
     public static void main(String[] args){
         try {
             Class.forName("org.h2.Driver");
         } catch (ClassNotFoundException e) {
-            logger.log("Error Code 501 (Class not found).");
-            logger.writeLog();
+            LOGGER.log("Error Code 501 (Class not found).");
+            LOGGER.writeLog();
             System.exit(1);
         }
         if(args != null){

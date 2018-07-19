@@ -36,13 +36,13 @@ class Initializer {
                 for(String tableName : tableNames){
                     log.append(tableName).append(", ");
                 }
-                Main.logger.log(log.substring(0, log.length()-2));
+                Main.LOGGER.log(log.substring(0, log.length()-2));
                 createTables();
             }
             tables.close();
         } catch (SQLException e) {
-            Main.logger.log("Error Code 701 (Table names could not be retrieved).");
-            Main.logger.writeLog();
+            Main.LOGGER.log("Error Code 701 (Table names could not be retrieved).");
+            Main.LOGGER.writeLog();
         }
     }
 
@@ -78,10 +78,10 @@ class Initializer {
                                                                                         "account INT NOT NULL, " +
                                                                                         "last INT UNSIGNED)");
             }
-            Main.logger.log("INFO: Created all tables");
+            Main.LOGGER.log("INFO: Created all tables");
         } catch (SQLException e) {
-            Main.logger.log("Error Code 702 (Can't create tables).");
-            Main.logger.writeLog();
+            Main.LOGGER.log("Error Code 702 (Can't create tables).");
+            Main.LOGGER.writeLog();
         }
     }
 }
