@@ -4,6 +4,7 @@ import de.supresswarnings.moneytable.model.transaction.Transaction;
 import de.supresswarnings.moneytable.model.transaction.TransactionGroup;
 
 import java.util.ArrayList;
+import java.util.List;
 
 public class Account {
 
@@ -43,11 +44,11 @@ public class Account {
         return current;
     }
 
-    public ArrayList<TransactionGroup> getTransactionGroups() {
+    public List<TransactionGroup> getTransactionGroups() {
         return transactionGroups;
     }
 
-    public ArrayList<Transaction> getTransactions() {
+    public List<Transaction> getTransactions() {
         return transactions;
     }
 }

@@ -1,6 +1,7 @@
 package de.supresswarnings.moneytable.model.transaction;
 
 import java.util.ArrayList;
+import java.util.List;
 
 public class TransactionGroup {
     private String name;
@@ -27,7 +28,7 @@ public class TransactionGroup {
         transactions.add(transaction);
     }
 
-    public ArrayList<UniqueTransaction> getTransactions() {
+    public List<UniqueTransaction> getTransactions() {
         return transactions;
     }
 
