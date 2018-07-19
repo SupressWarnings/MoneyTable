@@ -1,5 +1,7 @@
 package de.supresswarnings.moneytable.desktop.data;
 
+import de.supresswarnings.moneytable.desktop.Main;
+
 import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -30,12 +32,17 @@ class Initializer {
                 tableNames.remove(tables.getString(1));
             }
             if(!tableNames.isEmpty()){
+                StringBuilder log = new StringBuilder("INFO: Creating tables ");
+                for(String tableName : tableNames){
+                    log.append(tableName).append(", ");
+                }
+                Main.logger.log(log.substring(0, log.length()-2));
                 createTables();
             }
             tables.close();
         } catch (SQLException e) {
-            System.out.println("Error Code 701 (Table names could not be retrieved).");
-            e.printStackTrace();
+            Main.logger.log("Error Code 701 (Table names could not be retrieved).");
+            Main.logger.writeLog();
         }
     }
 
@@ -71,9 +78,10 @@ class Initializer {
                                                                                         "account INT NOT NULL, " +
                                                                                         "last INT UNSIGNED)");
             }
+            Main.logger.log("INFO: Created all tables");
         } catch (SQLException e) {
-            System.err.println("Error Code 702 (Can't create tables).");
-            e.printStackTrace();
+            Main.logger.log("Error Code 702 (Can't create tables).");
+            Main.logger.writeLog();
         }
     }
 }
