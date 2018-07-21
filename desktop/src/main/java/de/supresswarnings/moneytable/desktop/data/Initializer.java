@@ -53,7 +53,7 @@ class Initializer {
             if(tableNames.contains(accountTable)){
                 createStatement.execute( statementPart+ accountTable + " (id INT AUTO_INCREMENT PRIMARY KEY, " +
                                                                                     "name VARCHAR(20) NOT NULL, " +
-                                                                                    "current DECIMAL(100,2))");
+                                                                                    "current DECIMAL(100,2) NOT NULL)");
             }
 
             if(tableNames.contains(transactionTable)){
