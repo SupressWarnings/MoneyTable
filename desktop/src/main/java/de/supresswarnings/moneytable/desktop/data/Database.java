@@ -16,6 +16,9 @@ class Database {
     private PreparedStatement updateAccount;
     private PreparedStatement updateTransaction;
 
+    private PreparedStatement deleteAccount;
+    private PreparedStatement deleteTransaction;
+
     private Database(){
         String path = System.getProperty("user.home") + "/.moneytable/database";
         try {
@@ -41,6 +44,9 @@ class Database {
 
             updateAccount = connection.prepareStatement("UPDATE account SET name = ?, current = ? WHERE id = ?");
             updateTransaction = connection.prepareStatement("UPDATE transaction SET name = ?, amount = ?, time = ?, account = ? WHERE id = ?");
+
+            deleteAccount = connection.prepareStatement("DELETE FROM account WHERE id = ?");
+            deleteTransaction = connection.prepareStatement("DELETE FROM transaction WHERE id = ?");
         } catch (SQLException e) {
             Main.LOGGER.log("ERROR: Code 603 (Preparing statements failed).");
             Main.LOGGER.log(e.getMessage());
@@ -116,9 +122,8 @@ class Database {
 
     void deleteTransaction(int id){
         try {
-            PreparedStatement deleteStatement = connection.prepareStatement("DELETE FROM transaction WHERE id = ?");
-            deleteStatement.setInt(1, id);
-            deleteStatement.executeUpdate();
+            deleteTransaction.setInt(1, id);
+            deleteTransaction.executeUpdate();
         } catch (SQLException e) {
             Main.LOGGER.log("ERROR: Code 60x (Deleting transaction failed).");
             Main.LOGGER.log(e.getMessage());
@@ -128,9 +133,8 @@ class Database {
 
     void deleteAccount(int id){
         try {
-            PreparedStatement deleteStatement = connection.prepareStatement("DELETE FROM account WHERE id = ?");
-            deleteStatement.setInt(1, id);
-            deleteStatement.executeUpdate();
+            deleteAccount.setInt(1, id);
+            deleteAccount.executeUpdate();
         } catch (SQLException e) {
             Main.LOGGER.log("ERROR: Code 60x (Deleting account failed).");
             Main.LOGGER.log(e.getMessage());
