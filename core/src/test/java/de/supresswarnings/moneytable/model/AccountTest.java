@@ -1,6 +1,5 @@
 package de.supresswarnings.moneytable.model;
 
-import de.supresswarnings.moneytable.model.transaction.TransactionGroup;
 import de.supresswarnings.moneytable.model.transaction.UniqueTransaction;
 import org.junit.Assert;
 import org.junit.Test;
@@ -15,26 +14,21 @@ public class AccountTest {
         Account account = new Account(name, current);
 
         Assert.assertEquals(name, account.getName());
-        Assert.assertEquals(current, account.getCurrent(), 0.0);
+        Assert.assertEquals(current, account.getBalance(), 0.0);
 
-        UniqueTransaction transaction = new UniqueTransaction("test", System.currentTimeMillis(), 1.23);
+        UniqueTransaction transaction = new UniqueTransaction("test",1.23d,  System.currentTimeMillis());
         account.add(transaction);
 
         Assert.assertEquals(transaction, account.getTransactions().get(0));
 
         current = 2.34;
-        account.setCurrent(current);
+        account.setBalance(current);
 
-        Assert.assertEquals(current, account.getCurrent(), 0.0);
+        Assert.assertEquals(current, account.getBalance(), 0.0);
 
         name = "Name";
         account.setName(name);
 
         Assert.assertEquals(name, account.getName());
-
-        TransactionGroup group = new TransactionGroup("test");
-        account.add(group);
-
-        Assert.assertEquals(group, account.getTransactionGroups().get(0));
     }
 }

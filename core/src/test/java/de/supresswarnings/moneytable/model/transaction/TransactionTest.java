@@ -28,17 +28,17 @@ public class TransactionTest {
         Assert.assertEquals(amount, transaction.getAmount(), 0.0);
     }
 
-    @Test(expected = TransactionError.class)
+    @Test(expected = TransactionException.class)
     public void testNameNull(){
         Transaction transaction = new Transaction(null, 1.23);
     }
 
-    @Test(expected = TransactionError.class)
+    @Test(expected = TransactionException.class)
     public void testNameEmpty(){
         Transaction transaction = new Transaction("", 1.23);
     }
 
-    @Test(expected = TransactionError.class)
+    @Test(expected = TransactionException.class)
     public void testAmountZero(){
         Transaction transaction = new Transaction("testTransaction", 0);
     }

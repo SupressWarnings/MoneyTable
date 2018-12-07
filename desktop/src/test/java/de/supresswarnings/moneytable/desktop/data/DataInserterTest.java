@@ -10,14 +10,17 @@ public class DataInserterTest {
     public void test(){
         DataInserter inserter = new DataInserter();
 
-        inserter.insertAccount(new Account("test", 0.0d));
-        inserter.insertTransaction(1, new UniqueTransaction("test", 1L, 0.1d));
-        inserter.insertTransactionGroup(1, new UniqueTransaction("test2", 2L, 0.2d));
+        Account account = new Account("test", 0.0d);
+        UniqueTransaction initialValues = new UniqueTransaction("test", 0.1d, 1L);
+        UniqueTransaction updatedValues = new UniqueTransaction("test2", 0.2d, 2L);
 
-        inserter.updateAccount(1, new Account("test2", 0.1d));
-        inserter.updateTransaction(1, 1, new UniqueTransaction("test2", 2L, 0.2d));
+        inserter.insertAccount(account);
+        inserter.insertTransaction(account, initialValues);
 
-        inserter.deleteAccount(1);
-        inserter.deleteTransaction(1);
+        inserter.updateAccount("test", new Account("test2", 0.1d));
+        inserter.updateTransaction(account, initialValues, updatedValues);
+
+        inserter.deleteAccount(account);
+        inserter.deleteTransaction(account, updatedValues);
     }
 }

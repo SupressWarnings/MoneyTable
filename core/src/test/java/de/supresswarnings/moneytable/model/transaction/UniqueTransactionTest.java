@@ -10,7 +10,7 @@ public class UniqueTransactionTest extends TransactionTest {
         long time = 0;
         double amount = 1.23;
 
-        UniqueTransaction transaction = new UniqueTransaction(name, time, amount);
+        UniqueTransaction transaction = new UniqueTransaction(name, amount, time);
         testTransaction(transaction, name, amount, true);
         Assert.assertEquals(time, transaction.getTime());
 
