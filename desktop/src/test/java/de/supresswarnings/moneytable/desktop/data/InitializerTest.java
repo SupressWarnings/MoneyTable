@@ -11,12 +11,12 @@ public class InitializerTest {
     @Test
     public void test(){
         ArrayList<String> tableNames = new ArrayList<>();
-        String accountTable = "ACCOUNT", transactionTable = "TRANSACTION",
-                transactionGroupTable = "TRANSACTIONGROUP", periodicTranscationTable = "PERIODICTRANSACTION";
+        String accountTable = "ACCOUNT", transactionTable = "TRANSACTION";
+//                transactionGroupTable = "TRANSACTIONGROUP", periodicTranscationTable = "PERIODICTRANSACTION";
         tableNames.add(accountTable);
         tableNames.add(transactionTable);
-        tableNames.add(transactionGroupTable);
-        tableNames.add(periodicTranscationTable);
+//        tableNames.add(transactionGroupTable);
+//        tableNames.add(periodicTranscationTable);
 
         String path = System.getProperty("user.home") + "/.moneytable/database";
         try {
@@ -35,8 +35,8 @@ public class InitializerTest {
             }
             statement.execute("DROP TABLE account");
             statement.execute("DROP TABLE transaction");
-            statement.execute("DROP TABLE transactionGroup");
-            statement.execute("DROP TABLE periodicTransaction");
+//            statement.execute("DROP TABLE transactionGroup");
+//            statement.execute("DROP TABLE periodicTransaction");
             connection.close();
         } catch (SQLException e) {
             e.printStackTrace();

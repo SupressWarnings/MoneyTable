@@ -14,15 +14,15 @@ class Initializer {
     private ArrayList<String> tableNames = new ArrayList<>();
     private String accountTable = "ACCOUNT";
     private String transactionTable = "TRANSACTION";
-    private String transactionGroupTable = "TRANSACTIONGROUP";
-    private String periodicTranscationTable = "PERIODICTRANSACTION";
+//    private String transactionGroupTable = "TRANSACTIONGROUP";
+//    private String periodicTranscationTable = "PERIODICTRANSACTION";
 
     Initializer(Connection connection){
         this.connection = connection;
         tableNames.add(accountTable);
         tableNames.add(transactionTable);
-        tableNames.add(transactionGroupTable);
-        tableNames.add(periodicTranscationTable);
+//        tableNames.add(transactionGroupTable);
+//        tableNames.add(periodicTranscationTable);
     }
 
     void checkTables(){
@@ -65,19 +65,19 @@ class Initializer {
                                                                                         "transactionGroup INT)");
             }
 
-            if(tableNames.contains(transactionGroupTable)){
-                createStatement.execute(statementPart + transactionGroupTable + "(id INT AUTO_INCREMENT, " +
-                                                                                        "name VARCHAR(20) NOT NULL, " +
-                                                                                        "account INT NOT NULL)");
-            }
+//            if(tableNames.contains(transactionGroupTable)){
+//                createStatement.execute(statementPart + transactionGroupTable + "(id INT AUTO_INCREMENT, " +
+//                                                                                        "name VARCHAR(20) NOT NULL, " +
+//                                                                                        "account INT NOT NULL)");
+//            }
 
-            if(tableNames.contains(periodicTranscationTable)){
-                createStatement.execute(statementPart + periodicTranscationTable + "(id INT AUTO_INCREMENT, " +
-                                                                                        "transaction INT NOT NULL, " +
-                                                                                        "rate MEDIUMINT NOT NULL, " +
-                                                                                        "account INT NOT NULL, " +
-                                                                                        "last INT UNSIGNED)");
-            }
+//            if(tableNames.contains(periodicTranscationTable)){
+//              createStatement.execute(statementPart + periodicTranscationTable + "(id INT AUTO_INCREMENT, " +
+//                                                                                       "transaction INT NOT NULL, " +
+//                                                                                       "rate MEDIUMINT NOT NULL, " +
+//                                                                                       "account INT NOT NULL, " +
+//                                                                                       "last INT UNSIGNED)");
+//           }
             Main.LOGGER.log("INFO: Created all tables");
         } catch (SQLException e) {
             Main.LOGGER.log("Error Code 702 (Can't create tables).");
