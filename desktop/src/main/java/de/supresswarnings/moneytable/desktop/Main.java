@@ -6,6 +6,7 @@ public class Main {
     public static final Logger LOGGER = new Logger();
 
     public static void main(String[] args){
-        System.out.println("Welcome to MoneyTable");
+        LOGGER.log("Welcome to MoneyTable");
+        LOGGER.writeLog();
     }
 }
