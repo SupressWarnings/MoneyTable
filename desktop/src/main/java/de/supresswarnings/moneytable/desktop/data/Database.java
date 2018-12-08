@@ -101,7 +101,7 @@ class Database {
     private Database(){
         String path = System.getProperty("user.home") + "/.moneytable/database";
         try {
-            connection = DriverManager.getConnection("jdbc:h2:" + path, "", "");
+            connection = DriverManager.getConnection("jdbc:h2:" + path, "userame", "passord");
             Main.LOGGER.log("INFO: Database connection established.");
             Initializer initializer = new Initializer(connection);
             initializer.checkTables();
