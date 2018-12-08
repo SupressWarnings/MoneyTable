@@ -109,7 +109,6 @@ class Database {
             initializer.checkTables();
             Main.LOGGER.log("INFO: Database initialization completed");
         } catch (SQLException e) {
-            lastError = e.getMessage() + "112";
             Main.LOGGER.logException("Error Code 601 (Database Connection error).", e);
         }
         initialize();
@@ -133,7 +132,6 @@ class Database {
             getTransactionsByAccount = connection.prepareStatement("SELECT * FROM transaction WHERE account = ?");
             getTransactionId = connection.prepareStatement("SELECT id FROM transaction WHERE name = ? AND amount = ? AND time = ? AND account = ?");
         } catch (SQLException e) {
-            lastError = e.getMessage() + "136";
             Main.LOGGER.logException("ERROR: Code 602 (Preparing statements failed).", e);
         }
     }
@@ -150,7 +148,11 @@ class Database {
             createAccount.setDouble(2, current);
             createAccount.execute();
         } catch (SQLException e) {
-            lastError = e.getMessage() + "153";
+            try {
+                lastError = e.getMessage() + "153" + (createAccount.isClosed());
+            } catch (SQLException e1) {
+                e1.printStackTrace();
+            }
             Main.LOGGER.logException("ERROR: Code 603 (Creating account failed).", e);
         }
     }
