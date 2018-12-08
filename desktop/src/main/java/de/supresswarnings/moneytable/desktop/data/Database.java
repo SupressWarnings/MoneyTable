@@ -149,7 +149,7 @@ class Database {
             createAccount.execute();
         } catch (SQLException e) {
             try {
-                lastError = e.getMessage() + "153" + (createAccount.isClosed());
+                lastError = e.getMessage() + "153" + (connection.isClosed());
             } catch (SQLException e1) {
                 e1.printStackTrace();
             }
