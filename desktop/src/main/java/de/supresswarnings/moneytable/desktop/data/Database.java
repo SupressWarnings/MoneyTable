@@ -15,6 +15,8 @@ import java.util.List;
  */
 class Database {
 
+    public String lastError = "";
+
     /**
      * To ensure that the Database is constructed one time only, there is a single static object of it.
      */
@@ -107,6 +109,7 @@ class Database {
             initializer.checkTables();
             Main.LOGGER.log("INFO: Database initialization completed");
         } catch (SQLException e) {
+            lastError = e.getMessage();
             Main.LOGGER.logException("Error Code 601 (Database Connection error).", e);
         }
         initialize();
@@ -130,6 +133,7 @@ class Database {
             getTransactionsByAccount = connection.prepareStatement("SELECT * FROM transaction WHERE account = ?");
             getTransactionId = connection.prepareStatement("SELECT id FROM transaction WHERE name = ? AND amount = ? AND time = ? AND account = ?");
         } catch (SQLException e) {
+            lastError = e.getMessage();
             Main.LOGGER.logException("ERROR: Code 602 (Preparing statements failed).", e);
         }
     }
@@ -146,7 +150,7 @@ class Database {
             createAccount.setDouble(2, current);
             createAccount.execute();
         } catch (SQLException e) {
-            System.err.println(e.getMessage());
+            lastError = e.getMessage();
             Main.LOGGER.logException("ERROR: Code 603 (Creating account failed).", e);
         }
     }
