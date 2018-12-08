@@ -198,8 +198,7 @@ class Database {
      */
     List<Account> getAccounts(){
         ArrayList<Account> accounts = new ArrayList<>();
-        try {
-            ResultSet set = getAccounts.executeQuery("SELECT * FROM account");
+        try(ResultSet set = getAccounts.executeQuery("SELECT * FROM account")){
             while(set.next()){
                 accounts.add(new Account(set.getString(2), set.getDouble(3)));
             }
@@ -220,9 +219,10 @@ class Database {
      */
     Account getAccount(int id){
         Account account = null;
+        ResultSet set = null;
         try {
             getAccountById.setInt(1, id);
-            ResultSet set = getAccountById.executeQuery();
+            set = getAccountById.executeQuery();
             if(set.next()){
                 account = new Account(set.getString(2), set.getDouble(3));
                 for(UniqueTransaction transaction : getTransactions(set.getInt(1))){
@@ -233,6 +233,16 @@ class Database {
             Main.LOGGER.log("ERROR: Code 60x (Loading account failed).");
             Main.LOGGER.log(e.getMessage());
             Main.LOGGER.writeLog();
+        }finally{
+            try {
+                if(set!= null){
+                    set.close();
+                }
+            } catch (SQLException e) {
+                Main.LOGGER.log("ERROR: Code 60x (Closing ResourceSet failed).");
+                Main.LOGGER.log(e.getMessage());
+                Main.LOGGER.writeLog();
+            }
         }
         return account;
     }
@@ -245,14 +255,25 @@ class Database {
      */
     int getAccountId(String name){
         int id = 0;
+        ResultSet set = null;
         try {
             getAccountByName.setString(1, name);
-            ResultSet set = getAccountByName.executeQuery();
+            set = getAccountByName.executeQuery();
             if(set.next()){
                 id = set.getInt(1);
             }
         } catch (SQLException e) {
             e.printStackTrace();
+        }finally{
+            try {
+                if(set!= null){
+                    set.close();
+                }
+            } catch (SQLException e) {
+                Main.LOGGER.log("ERROR: Code 60x (Closing ResourceSet failed).");
+                Main.LOGGER.log(e.getMessage());
+                Main.LOGGER.writeLog();
+            }
         }
         return id;
     }
@@ -298,7 +319,7 @@ class Database {
                 updateTransaction.setString(1, name);
                 updateTransaction.setDouble(2, amount);
                 updateTransaction.setLong(3, time);
-                updateTransaction.setInt(5, getTransaction(oldName, oldAmount, oldTime, accountId));
+                updateTransaction.setInt(4, getTransaction(oldName, oldAmount, oldTime, accountId));
                 updateTransaction.executeUpdate();
             }else{
                 Main.LOGGER.log("ERROR: Code 60x (Updated transaction does not exist).");
@@ -334,9 +355,10 @@ class Database {
      */
     List<UniqueTransaction> getTransactions(int accountId){
         ArrayList<UniqueTransaction> transactions = new ArrayList<>();
+        ResultSet set = null;
         try {
             getTransactionsByAccount.setInt(1, accountId);
-            ResultSet set = getTransactionsByAccount.executeQuery();
+            set = getTransactionsByAccount.executeQuery();
             while(set.next()){
                 transactions.add(new UniqueTransaction(set.getString(2), set.getDouble(3), set.getLong(4)));
             }
@@ -344,6 +366,16 @@ class Database {
             Main.LOGGER.log("ERROR: Code 60x (Transaction call failed).");
             Main.LOGGER.log(e.getMessage());
             Main.LOGGER.writeLog();
+        }finally{
+            try {
+                if(set!= null){
+                    set.close();
+                }
+            } catch (SQLException e) {
+                Main.LOGGER.log("ERROR: Code 60x (Closing ResourceSet failed).");
+                Main.LOGGER.log(e.getMessage());
+                Main.LOGGER.writeLog();
+            }
         }
         return transactions;
     }
@@ -359,17 +391,29 @@ class Database {
      */
     public int getTransaction(String name, double amount, long time, int accountId){
         int id = 0;
+        ResultSet set = null;
         try {
             getTransactionId.setString(1, name);
             getTransactionId.setDouble(2, amount);
             getTransactionId.setLong(3, time);
             getTransactionId.setInt(4, accountId);
-            ResultSet set = getAccountByName.executeQuery();
+
+            set = getAccountByName.executeQuery();
             if(set.next()){
                 id = set.getInt(1);
             }
         } catch (SQLException e) {
             e.printStackTrace();
+        }finally{
+            try {
+                if(set!= null){
+                    set.close();
+                }
+            } catch (SQLException e) {
+                Main.LOGGER.log("ERROR: Code 60x (Closing ResourceSet failed).");
+                Main.LOGGER.log(e.getMessage());
+                Main.LOGGER.writeLog();
+            }
         }
         return id;
     }
