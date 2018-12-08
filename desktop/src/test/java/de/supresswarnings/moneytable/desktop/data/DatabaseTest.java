@@ -8,7 +8,6 @@ public class DatabaseTest {
 
     @Test
     public void test(){
-        Database.close();
         Database.getDatabase();
         Database database = Database.getDatabase();
         database.createAccount("test", 0.0d);
@@ -36,6 +35,7 @@ public class DatabaseTest {
         database.updateTransaction( "test2", 0.2d, 2L, "test", 0.1d, 1L, 1);
         database.deleteTransaction(1);
 
+        Database.close();
         Database.close();
     }
 }
