@@ -20,7 +20,7 @@ public class InitializerTest {
 
         String path = System.getProperty("user.home") + "/.moneytable/database";
         try {
-            Connection connection = DriverManager.getConnection("jdbc:h2:" + path);
+            Connection connection = DriverManager.getConnection("jdbc:h2:" + path, "userame", "passord");
             Initializer initializer = new Initializer(connection);
             initializer.checkTables();
 

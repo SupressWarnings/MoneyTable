@@ -40,6 +40,12 @@ public class Logger {
         log += timePart + logEntry + "\n";
     }
 
+    public void logException(String logEntry, Exception e){
+        log(logEntry);
+        log(e.getMessage());
+        writeLog();
+    }
+
     public void writeLog() {
         try(PrintWriter stream = new PrintWriter(new FileOutputStream(logFile, true));) {
             stream.append(log);

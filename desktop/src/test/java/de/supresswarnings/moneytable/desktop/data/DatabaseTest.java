@@ -16,6 +16,8 @@ public class DatabaseTest {
 
         database.getAccounts();
 
+        database.getAccountId("test");
+
         Account account = database.getAccount(database.getAccountId("test"));
         Assert.assertNotNull(account);
         Assert.assertEquals("test", account.getName());

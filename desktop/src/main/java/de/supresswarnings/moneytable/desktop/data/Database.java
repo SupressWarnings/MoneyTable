@@ -107,9 +107,7 @@ class Database {
             initializer.checkTables();
             Main.LOGGER.log("INFO: Database initialization completed");
         } catch (SQLException e) {
-            Main.LOGGER.log("Error Code 601 (Database Connection error).");
-            Main.LOGGER.log(e.getMessage());
-            Main.LOGGER.writeLog();
+            Main.LOGGER.logException("Error Code 601 (Database Connection error).", e);
         }
         initialize();
     }
@@ -132,9 +130,7 @@ class Database {
             getTransactionsByAccount = connection.prepareStatement("SELECT * FROM transaction WHERE account = ?");
             getTransactionId = connection.prepareStatement("SELECT id FROM transaction WHERE name = ? AND amount = ? AND time = ? AND account = ?");
         } catch (SQLException e) {
-            Main.LOGGER.log("ERROR: Code 602 (Preparing statements failed).");
-            Main.LOGGER.log(e.getMessage());
-            Main.LOGGER.writeLog();
+            Main.LOGGER.logException("ERROR: Code 602 (Preparing statements failed).", e);
         }
     }
 
@@ -150,9 +146,7 @@ class Database {
             createAccount.setDouble(2, current);
             createAccount.execute();
         } catch (SQLException e) {
-            Main.LOGGER.log("ERROR: Code 603 (Creating account failed).");
-            Main.LOGGER.log(e.getMessage());
-            Main.LOGGER.writeLog();
+            Main.LOGGER.logException("ERROR: Code 603 (Creating account failed).", e);
         }
     }
 
@@ -170,9 +164,7 @@ class Database {
             updateAccount.setInt(3, id);
             updateAccount.executeUpdate();
         } catch (SQLException e) {
-            Main.LOGGER.log("ERROR: Code 604 (Updating account failed).");
-            Main.LOGGER.log(e.getMessage());
-            Main.LOGGER.writeLog();
+            Main.LOGGER.logException("ERROR: Code 604 (Updating account failed).", e);
         }
     }
 
@@ -185,9 +177,7 @@ class Database {
             deleteAccount.setInt(1, id);
             deleteAccount.executeUpdate();
         } catch (SQLException e) {
-            Main.LOGGER.log("ERROR: Code 605 (Deleting account failed).");
-            Main.LOGGER.log(e.getMessage());
-            Main.LOGGER.writeLog();
+            Main.LOGGER.logException("ERROR: Code 605 (Deleting account failed).", e);
         }
     }
 
@@ -203,9 +193,7 @@ class Database {
                 accounts.add(new Account(set.getString(2), set.getDouble(3)));
             }
         } catch (SQLException e) {
-            Main.LOGGER.log("ERROR: Code 606 (Loading accounts failed).");
-            Main.LOGGER.log(e.getMessage());
-            Main.LOGGER.writeLog();
+            Main.LOGGER.logException("ERROR: Code 606 (Loading accounts failed).", e);
         }
         return accounts;
     }
@@ -230,18 +218,14 @@ class Database {
                 }
             }
         } catch (SQLException e) {
-            Main.LOGGER.log("ERROR: Code 607 (Loading account failed).");
-            Main.LOGGER.log(e.getMessage());
-            Main.LOGGER.writeLog();
+            Main.LOGGER.logException("ERROR: Code 607 (Loading account failed).", e);
         }finally{
             try {
                 if(set!= null){
                     set.close();
                 }
             } catch (SQLException e) {
-                Main.LOGGER.log("ERROR: Code 608 (Closing ResourceSet failed).");
-                Main.LOGGER.log(e.getMessage());
-                Main.LOGGER.writeLog();
+                Main.LOGGER.logException("ERROR: Code 608 (Closing ResourceSet failed).", e);
             }
         }
         return account;
@@ -263,18 +247,14 @@ class Database {
                 id = set.getInt(1);
             }
         } catch (SQLException e) {
-            Main.LOGGER.log("ERROR: Code 609 (Getting account id failed).");
-            Main.LOGGER.log(e.getMessage());
-            Main.LOGGER.writeLog();
+            Main.LOGGER.logException("ERROR: Code 609 (Getting account id failed).", e);
         }finally{
             try {
                 if(set!= null){
                     set.close();
                 }
             } catch (SQLException e) {
-                Main.LOGGER.log("ERROR: Code 610 (Closing ResourceSet failed).");
-                Main.LOGGER.log(e.getMessage());
-                Main.LOGGER.writeLog();
+                Main.LOGGER.logException("ERROR: Code 610 (Closing ResourceSet failed).", e);
             }
         }
         return id;
@@ -298,9 +278,7 @@ class Database {
             createTransaction.setInt(4, account);
             createTransaction.execute();
         } catch (SQLException e) {
-            Main.LOGGER.log("ERROR: Code 611 (Creating transaction failed).");
-            Main.LOGGER.log(e.getMessage());
-            Main.LOGGER.writeLog();
+            Main.LOGGER.logException("ERROR: Code 611 (Creating transaction failed).", e);
         }
     }
 
@@ -325,11 +303,10 @@ class Database {
                 updateTransaction.executeUpdate();
             }else{
                 Main.LOGGER.log("ERROR: Code 612 (Updated transaction does not exist).");
+                Main.LOGGER.writeLog();
             }
         } catch (SQLException e) {
-            Main.LOGGER.log("ERROR: Code 613 (Updating transaction failed).");
-            Main.LOGGER.log(e.getMessage());
-            Main.LOGGER.writeLog();
+            Main.LOGGER.logException("ERROR: Code 613 (Updating transaction failed).", e);
         }
     }
 
@@ -343,9 +320,7 @@ class Database {
             deleteTransaction.setInt(1, id);
             deleteTransaction.executeUpdate();
         } catch (SQLException e) {
-            Main.LOGGER.log("ERROR: Code 614 (Deleting transaction failed).");
-            Main.LOGGER.log(e.getMessage());
-            Main.LOGGER.writeLog();
+            Main.LOGGER.logException("ERROR: Code 614 (Deleting transaction failed).", e);
         }
     }
 
@@ -365,18 +340,14 @@ class Database {
                 transactions.add(new UniqueTransaction(set.getString(2), set.getDouble(3), set.getLong(4)));
             }
         } catch (SQLException e) {
-            Main.LOGGER.log("ERROR: Code 615 (Transaction call failed).");
-            Main.LOGGER.log(e.getMessage());
-            Main.LOGGER.writeLog();
+            Main.LOGGER.logException("ERROR: Code 615 (Transaction call failed).", e);
         }finally{
             try {
                 if(set!= null){
                     set.close();
                 }
             } catch (SQLException e) {
-                Main.LOGGER.log("ERROR: Code 616 (Closing ResourceSet failed).");
-                Main.LOGGER.log(e.getMessage());
-                Main.LOGGER.writeLog();
+                Main.LOGGER.logException("ERROR: Code 616 (Closing ResourceSet failed).", e);
             }
         }
         return transactions;
@@ -405,18 +376,14 @@ class Database {
                 id = set.getInt(1);
             }
         } catch (SQLException e) {
-            Main.LOGGER.log("ERROR: Code 617 (Getting transaction failed).");
-            Main.LOGGER.log(e.getMessage());
-            Main.LOGGER.writeLog();
+            Main.LOGGER.logException("ERROR: Code 617 (Getting transaction failed).", e);
         }finally{
             try {
                 if(set!= null){
                     set.close();
                 }
             } catch (SQLException e) {
-                Main.LOGGER.log("ERROR: Code 618 (Closing ResourceSet failed).");
-                Main.LOGGER.log(e.getMessage());
-                Main.LOGGER.writeLog();
+                Main.LOGGER.logException("ERROR: Code 618 (Closing ResourceSet failed).", e);
             }
         }
         return id;
@@ -430,9 +397,7 @@ class Database {
             connection.close();
             Main.LOGGER.log("INFO: Database connection closed.");
         } catch (SQLException e) {
-            Main.LOGGER.log("Error Code 619 (Database connection not closed properly).");
-            Main.LOGGER.log(e.getMessage());
-            Main.LOGGER.writeLog();
+            Main.LOGGER.logException("Error Code 619 (Database connection not closed properly).", e);
         }
     }
 
