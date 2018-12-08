@@ -14,7 +14,7 @@ public class DatabaseTest {
         database.createAccount("test", 0.0d);
         database.createTransaction("test", 0.1d, 1L,1);
 
-        database.getAccounts();
+        System.out.println(database.getAccounts().size());
 
         database.getAccountId("test");
 
