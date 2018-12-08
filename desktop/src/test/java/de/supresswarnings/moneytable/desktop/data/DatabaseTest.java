@@ -13,19 +13,14 @@ public class DatabaseTest {
         database.createAccount("test", 0.0d);
         database.createTransaction("test", 0.1d, 1L,1);
 
-        Assert.assertEquals("", database.lastError);
-        Assert.assertEquals(1, database.getAccounts().size());
-
-        database.getAccountId("test");
-
-        Account account = database.getAccount(database.getAccountId("test"));
-        Assert.assertNotNull(account);
-        Assert.assertEquals("test", account.getName());
-        Assert.assertEquals(0.0d, account.getBalance(), 0.0d);
+        Account account2 = database.getAccount(database.getAccountId("test"));
+        Assert.assertNotNull(account2);
+        Assert.assertEquals("test", account2.getName());
+        Assert.assertEquals(0.0d, account2.getBalance(), 0.0d);
 
         database.getTransactions(1);
 
-        account = database.getAccount(database.getAccountId("test"));
+        Account account = database.getAccount(database.getAccountId("test"));
         Assert.assertEquals("test", account.getName());
         Assert.assertEquals(0.0d, account.getBalance(), 0.0d);
 
