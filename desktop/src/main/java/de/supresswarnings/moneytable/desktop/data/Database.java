@@ -15,8 +15,6 @@ import java.util.List;
  */
 class Database {
 
-    public String lastError = "";
-
     /**
      * To ensure that the Database is constructed one time only, there is a single static object of it.
      */
@@ -148,11 +146,6 @@ class Database {
             createAccount.setDouble(2, current);
             createAccount.execute();
         } catch (SQLException e) {
-            try {
-                lastError = e.getMessage() + "153" + (connection.isClosed());
-            } catch (SQLException e1) {
-                e1.printStackTrace();
-            }
             Main.LOGGER.logException("ERROR: Code 603 (Creating account failed).", e);
         }
     }
