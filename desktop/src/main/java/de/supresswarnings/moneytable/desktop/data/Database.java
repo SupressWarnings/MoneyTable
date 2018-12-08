@@ -263,7 +263,9 @@ class Database {
                 id = set.getInt(1);
             }
         } catch (SQLException e) {
-            e.printStackTrace();
+            Main.LOGGER.log("ERROR: Code 60x (Getting account id failed).");
+            Main.LOGGER.log(e.getMessage());
+            Main.LOGGER.writeLog();
         }finally{
             try {
                 if(set!= null){
@@ -403,7 +405,9 @@ class Database {
                 id = set.getInt(1);
             }
         } catch (SQLException e) {
-            e.printStackTrace();
+            Main.LOGGER.log("ERROR: Code 60x (Getting transaction failed).");
+            Main.LOGGER.log(e.getMessage());
+            Main.LOGGER.writeLog();
         }finally{
             try {
                 if(set!= null){
