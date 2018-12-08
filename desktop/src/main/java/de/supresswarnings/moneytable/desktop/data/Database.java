@@ -146,6 +146,7 @@ class Database {
             createAccount.setDouble(2, current);
             createAccount.execute();
         } catch (SQLException e) {
+            System.err.println(e.getMessage());
             Main.LOGGER.logException("ERROR: Code 603 (Creating account failed).", e);
         }
     }
