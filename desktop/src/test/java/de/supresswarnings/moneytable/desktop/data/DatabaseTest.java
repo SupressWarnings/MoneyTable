@@ -34,9 +34,16 @@ public class DatabaseTest {
         database.updateTransaction( "database2", 0.2d, 2L, "database", 0.1d, 1L, 1);// no transaction
         ArrayList<UniqueTransaction> transactions = (ArrayList)database.getTransactions(1);
         Assert.assertFalse(transactions.isEmpty());
-        Assert.assertEquals("database2", transactions.get(0).getName());
-        Assert.assertEquals(0.2d, transactions.get(0).getAmount(), 0.0d);
-        Assert.assertEquals(2L, transactions.get(0).getTime());
+
+        boolean contains = false;
+        for(UniqueTransaction transaction : transactions){
+            if(transaction.getName().equals("database2")){
+                contains = true;
+            }
+        }
+        if(!contains){
+            Assert.fail("Does not contain updated transaction.");
+        }
 
         Account account3 = database.getAccount(1);
 
