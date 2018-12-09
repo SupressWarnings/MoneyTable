@@ -8,5 +8,6 @@ public class MainTest {
         Main.main(new String[]{"-d"});
         Main.main(new String[]{"test"});
         Main.main(null);
+        Main main = new Main();
     }
 }

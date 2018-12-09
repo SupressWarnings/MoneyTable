@@ -9,6 +9,7 @@ public class LoggerTest {
         Logger logger = new Logger();
         logger.log("test");
         logger.writeLog();
+        logger.logException("test", new Exception());
         logger = new Logger();
     }
 }

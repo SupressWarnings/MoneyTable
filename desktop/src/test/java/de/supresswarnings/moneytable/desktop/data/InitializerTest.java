@@ -12,11 +12,8 @@ public class InitializerTest {
     public void test(){
         ArrayList<String> tableNames = new ArrayList<>();
         String accountTable = "ACCOUNT", transactionTable = "TRANSACTION";
-//                transactionGroupTable = "TRANSACTIONGROUP", periodicTranscationTable = "PERIODICTRANSACTION";
         tableNames.add(accountTable);
         tableNames.add(transactionTable);
-//        tableNames.add(transactionGroupTable);
-//        tableNames.add(periodicTranscationTable);
 
         String path = System.getProperty("user.home") + "/.moneytable/database";
         try {
@@ -25,6 +22,7 @@ public class InitializerTest {
             initializer.checkTables();
 
             initializer.checkTables();
+
             Statement statement = connection.createStatement();
             ResultSet tables = statement.executeQuery("SHOW TABLES");
             while(tables.next()){
@@ -33,10 +31,13 @@ public class InitializerTest {
             if(!tableNames.isEmpty()){
                 Assert.fail("Tables not created");
             }
+
             statement.execute("DROP TABLE account");
+            initializer.checkTables();
+
             statement.execute("DROP TABLE transaction");
-//            statement.execute("DROP TABLE transactionGroup");
-//            statement.execute("DROP TABLE periodicTransaction");
+            initializer.checkTables();
+
             connection.close();
         } catch (SQLException e) {
             e.printStackTrace();
