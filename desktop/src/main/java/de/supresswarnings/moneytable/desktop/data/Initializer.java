@@ -23,6 +23,7 @@ class Initializer {
 
     void checkTables(){
         try (Statement statement = connection.createStatement()){
+            Main.LOGGER.log("INFO: Checking database tables");
             ResultSet tables = statement.executeQuery("SHOW TABLES");
             while(tables.next()){
                 tableNames.remove(tables.getString(1));

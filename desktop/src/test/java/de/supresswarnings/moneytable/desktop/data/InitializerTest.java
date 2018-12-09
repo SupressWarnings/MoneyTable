@@ -1,5 +1,6 @@
 package de.supresswarnings.moneytable.desktop.data;
 
+import de.supresswarnings.moneytable.desktop.Main;
 import org.junit.Assert;
 import org.junit.Test;
 
@@ -20,7 +21,7 @@ public class InitializerTest {
             Connection connection = DriverManager.getConnection("jdbc:h2:" + path, "userame", "passord");
             Initializer initializer = new Initializer(connection);
             initializer.checkTables();
-
+            initializer.checkTables();
             initializer.checkTables();
 
             Statement statement = connection.createStatement();
@@ -33,15 +34,28 @@ public class InitializerTest {
             }
 
             statement.execute("DROP TABLE account");
-            initializer.checkTables();
+            ResultSet deletedAccount = statement.executeQuery("SHOW TABLES");
+            deletedAccount.next();
+            if(!"ACCOUNT".equals(deletedAccount.getString(1))){
+                initializer.checkTables();
+            }else{
+                Assert.fail("Deleting Table ACCOUNT failed");
+            }
 
             statement.execute("DROP TABLE transaction");
-            initializer.checkTables();
+            ResultSet deletedTransaction = statement.executeQuery("SHOW TABLES");
+            deletedTransaction.next();
+            if(!deletedTransaction.next()){
+                initializer.checkTables();
+            }else{
+                Assert.fail("Deleting Table TRANSACTION failed");
+            }
 
             connection.close();
         } catch (SQLException e) {
             e.printStackTrace();
             Assert.fail();
         }
+        Main.LOGGER.writeLog();
     }
 }
