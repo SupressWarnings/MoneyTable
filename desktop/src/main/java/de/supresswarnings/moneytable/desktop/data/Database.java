@@ -295,11 +295,11 @@ class Database {
      */
     void updateTransaction(String name, double amount, long time,  String oldName, double oldAmount, long oldTime, int accountId){
         try {
-            if(getTransaction(oldName, oldAmount, oldTime, accountId) != 0){
+            if(getTransactionId(oldName, oldAmount, oldTime, accountId) != 0){
                 updateTransaction.setString(1, name);
                 updateTransaction.setDouble(2, amount);
                 updateTransaction.setLong(3, time);
-                updateTransaction.setInt(4, getTransaction(oldName, oldAmount, oldTime, accountId));
+                updateTransaction.setInt(4, getTransactionId(oldName, oldAmount, oldTime, accountId));
                 updateTransaction.executeUpdate();
             }else{
                 Main.LOGGER.log("ERROR: Code 612 (Updated transaction does not exist).");
@@ -330,7 +330,7 @@ class Database {
      * @param accountId the id of the account
      * @return an {@link ArrayList} containing all Transactions in the Database that are affiliated with this account
      */
-    ArrayList<UniqueTransaction> getTransactions(int accountId){
+    List<UniqueTransaction> getTransactions(int accountId){
         ArrayList<UniqueTransaction> transactions = new ArrayList<>();
         ResultSet set = null;
         try {
@@ -362,7 +362,7 @@ class Database {
      * @param accountId the id of the account of the transaction
      * @return the id of the transaction with the specified information
      */
-    public int getTransaction(String name, double amount, long time, int accountId){
+    int getTransactionId(String name, double amount, long time, int accountId){
         int id = 0;
         ResultSet set = null;
         try {
@@ -371,7 +371,7 @@ class Database {
             getTransactionId.setLong(3, time);
             getTransactionId.setInt(4, accountId);
 
-            set = getAccountByName.executeQuery();
+            set = getTransactionId.executeQuery();
             if(set.next()){
                 id = set.getInt(1);
             }

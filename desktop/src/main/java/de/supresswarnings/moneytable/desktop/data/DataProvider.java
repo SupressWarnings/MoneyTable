@@ -53,6 +53,6 @@ public class DataProvider {
      * @return the id of the transaction
      */
     int getTransactionId(Account account, UniqueTransaction transaction){
-        return database.getTransaction(transaction.getName(), transaction.getAmount(), transaction.getTime(), getAccountId(account.getName()));
+        return database.getTransactionId(transaction.getName(), transaction.getAmount(), transaction.getTime(), getAccountId(account.getName()));
     }
 }
