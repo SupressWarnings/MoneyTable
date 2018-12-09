@@ -10,9 +10,11 @@ public class DataInserterTest {
     public void test(){
         DataInserter inserter = new DataInserter();
 
-        Account account = new Account("test", 0.0d);
-        UniqueTransaction initialValues = new UniqueTransaction("test", 0.1d, 1L);
-        UniqueTransaction updatedValues = new UniqueTransaction("test2", 0.2d, 2L);
+        Account account = new Account("dataProvider", 0.0d);
+        Account account2 = new Account("dataProvider2", 0.1d);
+        UniqueTransaction initialValues = new UniqueTransaction("dataProvider", 0.1d, 1L);
+        UniqueTransaction updatedValues = new UniqueTransaction("dataProvider", 0.2d, 2L);
+        account2.add(initialValues);
 
         inserter.insertAccount(account);
         inserter.insertTransaction(account, initialValues);

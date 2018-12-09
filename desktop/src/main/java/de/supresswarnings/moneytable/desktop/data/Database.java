@@ -330,7 +330,7 @@ class Database {
      * @param accountId the id of the account
      * @return an {@link ArrayList} containing all Transactions in the Database that are affiliated with this account
      */
-    List<UniqueTransaction> getTransactions(int accountId){
+    ArrayList<UniqueTransaction> getTransactions(int accountId){
         ArrayList<UniqueTransaction> transactions = new ArrayList<>();
         ResultSet set = null;
         try {
