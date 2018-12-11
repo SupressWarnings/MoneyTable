@@ -27,9 +27,7 @@ public class DataInserter {
     public void insertAccount(Account account){
         database.createAccount(account.getName(), account.getBalance());
         for(Transaction transaction : account.getTransactions()){
-            if(transaction instanceof UniqueTransaction){
-                insertTransaction(account, (UniqueTransaction)transaction);
-            }
+            insertTransaction(account, (UniqueTransaction)transaction);
         }
     }
 
