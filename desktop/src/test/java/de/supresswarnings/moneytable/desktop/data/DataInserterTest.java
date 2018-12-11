@@ -20,6 +20,7 @@ public class DataInserterTest {
         inserter.insertTransaction(account, initialValues);
 
         inserter.insertAccount(account2);
+        inserter.updateAccount(account2, 0.2d);
 
         inserter.updateAccount("test", new Account("test2", 0.1d));
         inserter.updateTransaction(account, initialValues, updatedValues);
