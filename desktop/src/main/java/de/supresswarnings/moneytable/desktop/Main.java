@@ -1,6 +1,7 @@
 package de.supresswarnings.moneytable.desktop;
 
 import de.supresswarnings.moneytable.desktop.settings.Logger;
+import de.supresswarnings.moneytable.desktop.ui.Application;
 
 /**
  * Contains the start method for the application.
@@ -20,7 +21,6 @@ public class Main {
      * @param args (irrelevant so far)
      */
     public static void main(String[] args){
-        LOGGER.log("Welcome to MoneyTable");
-        LOGGER.writeLog();
+        Application.launch(Application.class, args);
     }
 }

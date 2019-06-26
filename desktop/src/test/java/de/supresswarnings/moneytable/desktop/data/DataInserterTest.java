@@ -1,7 +1,8 @@
 package de.supresswarnings.moneytable.desktop.data;
 
 import de.supresswarnings.moneytable.model.Account;
-import de.supresswarnings.moneytable.model.transaction.UniqueTransaction;
+import de.supresswarnings.moneytable.model.transaction.Transaction;
+import de.supresswarnings.moneytable.model.transaction.TransactionFactory;
 import org.junit.Test;
 
 public class DataInserterTest {
@@ -12,8 +13,8 @@ public class DataInserterTest {
 
         Account account = new Account("dataProvider", 0.0d);
         Account account2 = new Account("dataProvider2", 0.1d);
-        UniqueTransaction initialValues = new UniqueTransaction("dataProvider", 0.1d, 1L);
-        UniqueTransaction updatedValues = new UniqueTransaction("dataProvider", 0.2d, 2L);
+        Transaction initialValues = TransactionFactory.createTransaction("dataProvider", 0.1d, 1L);
+        Transaction updatedValues = TransactionFactory.createTransaction("dataProvider", 0.2d, 2L);
         account2.add(initialValues);
 
         inserter.insertAccount(account);
@@ -23,7 +24,7 @@ public class DataInserterTest {
         inserter.updateAccount(account2, 0.2d);
 
         inserter.updateAccount("test", new Account("test2", 0.1d));
-        inserter.updateTransaction(account, initialValues, updatedValues);
+        inserter.transactionInput(account, initialValues, updatedValues);
 
         inserter.deleteAccount(account);
         inserter.deleteTransaction(account, updatedValues);

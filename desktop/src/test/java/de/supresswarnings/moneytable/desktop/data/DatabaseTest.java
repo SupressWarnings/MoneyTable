@@ -1,7 +1,7 @@
 package de.supresswarnings.moneytable.desktop.data;
 
 import de.supresswarnings.moneytable.model.Account;
-import de.supresswarnings.moneytable.model.transaction.UniqueTransaction;
+import de.supresswarnings.moneytable.model.transaction.Transaction;
 import org.junit.Assert;
 import org.junit.Test;
 
@@ -32,11 +32,11 @@ public class DatabaseTest {
 
         database.updateTransaction( "database2", 0.2d, 2L, "database", 0.1d, 1L, 1);
         database.updateTransaction( "database2", 0.2d, 2L, "database", 0.1d, 1L, 1);// no transaction
-        ArrayList<UniqueTransaction> transactions = (ArrayList)database.getTransactions(1);
+        ArrayList<Transaction> transactions = (ArrayList)database.getTransactions(1);
         Assert.assertFalse(transactions.isEmpty());
 
         boolean contains = false;
-        for(UniqueTransaction transaction : transactions){
+        for(Transaction transaction : transactions){
             if(transaction.getName().equals("database2")){
                 contains = true;
             }

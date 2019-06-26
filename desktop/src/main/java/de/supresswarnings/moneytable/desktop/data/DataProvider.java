@@ -1,7 +1,7 @@
 package de.supresswarnings.moneytable.desktop.data;
 
 import de.supresswarnings.moneytable.model.Account;
-import de.supresswarnings.moneytable.model.transaction.UniqueTransaction;
+import de.supresswarnings.moneytable.model.transaction.Transaction;
 
 import java.util.List;
 
@@ -46,13 +46,13 @@ public class DataProvider {
     }
 
     /**
-     * Gets the id of a {@link UniqueTransaction} based on its values.
+     * Gets the id of a {@link Transaction} based on its values.
      *
      * @param account the account of the transaction
      * @param transaction the transaction
      * @return the id of the transaction
      */
-    int getTransactionId(Account account, UniqueTransaction transaction){
+    int getTransactionId(Account account, Transaction transaction){
         return database.getTransactionId(transaction.getName(), transaction.getAmount(), transaction.getTime(), getAccountId(account.getName()));
     }
 }

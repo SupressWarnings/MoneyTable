@@ -2,7 +2,8 @@ package de.supresswarnings.moneytable.desktop.data;
 
 import de.supresswarnings.moneytable.desktop.Main;
 import de.supresswarnings.moneytable.model.Account;
-import de.supresswarnings.moneytable.model.transaction.UniqueTransaction;
+import de.supresswarnings.moneytable.model.transaction.Transaction;
+import de.supresswarnings.moneytable.model.transaction.TransactionFactory;
 
 import java.sql.*;
 import java.util.ArrayList;
@@ -213,7 +214,7 @@ class Database {
             set = getAccountById.executeQuery();
             if(set.next()){
                 account = new Account(set.getString(2), set.getDouble(3));
-                for(UniqueTransaction transaction : getTransactions(set.getInt(1))){
+                for(Transaction transaction : getTransactions(set.getInt(1))){
                     account.add(transaction);
                 }
             }
@@ -330,14 +331,14 @@ class Database {
      * @param accountId the id of the account
      * @return an {@link ArrayList} containing all Transactions in the Database that are affiliated with this account
      */
-    List<UniqueTransaction> getTransactions(int accountId){
-        ArrayList<UniqueTransaction> transactions = new ArrayList<>();
+    List<Transaction> getTransactions(int accountId){
+        ArrayList<Transaction> transactions = new ArrayList<>();
         ResultSet set = null;
         try {
             getTransactionsByAccount.setInt(1, accountId);
             set = getTransactionsByAccount.executeQuery();
             while(set.next()){
-                transactions.add(new UniqueTransaction(set.getString(2), set.getDouble(3), set.getLong(4)));
+                transactions.add(TransactionFactory.createTransaction(set.getString(2), set.getDouble(3), set.getLong(4)));
             }
         } catch (SQLException e) {
             Main.LOGGER.logException("ERROR: Code 615 (Transaction call failed).", e);

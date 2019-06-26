@@ -88,6 +88,7 @@ public class Logger {
     public void writeLog() {
         try(PrintWriter stream = new PrintWriter(new FileOutputStream(logFile, true))) {
             stream.append(log);
+            log = "";
         } catch (FileNotFoundException e) {
             e.printStackTrace();
         }

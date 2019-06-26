@@ -17,14 +17,24 @@ public class Transaction {
     private double amount;
 
     /**
+     * The timestamp of a transaction is important for sorting and identifying them in a larger group.
+     */
+    private long time;
+
+    private long id;
+
+    /**
      * Instantiates the class and sets the two basic values.
      *
      * @param name the name/reason of the transaction
      * @param amount the amount of the transaction (negative for expenses, positive for income)
+     * @param time the time of the transaction
      */
-    Transaction(String name, double amount){
+    Transaction(String name, double amount, long time, long id){
         setName(name);
         setAmount(amount);
+        setTime(time);
+        this.id = id;
     }
 
     /**
@@ -77,5 +87,31 @@ public class Transaction {
      */
     boolean isIncome() {
         return amount > 0;
+    }
+
+    /**
+     * Setter for the timestamp.
+     *
+     * @param time the new time of the transaction
+     */
+    void setTime(long time) {
+        this.time = time;
+    }
+
+    /**
+     * Getter for the timestamp.
+     *
+     * @return the timestamp of the transaction
+     */
+    public long getTime() {
+        return time;
+    }
+
+    public long getId(){
+        return id;
+    }
+
+    public void setId(long id){
+        this.id = id;
     }
 }

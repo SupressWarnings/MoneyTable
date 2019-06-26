@@ -2,7 +2,6 @@ package de.supresswarnings.moneytable.desktop.data;
 
 import de.supresswarnings.moneytable.model.Account;
 import de.supresswarnings.moneytable.model.transaction.Transaction;
-import de.supresswarnings.moneytable.model.transaction.UniqueTransaction;
 
 /**
  * An interface between the {@link Database} and the {@link de.supresswarnings.moneytable.model.transaction}-package.
@@ -27,7 +26,7 @@ public class DataInserter {
     public void insertAccount(Account account){
         database.createAccount(account.getName(), account.getBalance());
         for(Transaction transaction : account.getTransactions()){
-            insertTransaction(account, (UniqueTransaction)transaction);
+            insertTransaction(account, transaction);
         }
     }
 
@@ -37,7 +36,7 @@ public class DataInserter {
      * @param account the account the transaction will be pointing to
      * @param transaction the transaction that will be saved
      */
-    public void insertTransaction(Account account, UniqueTransaction transaction){
+    public void insertTransaction(Account account, Transaction transaction){
         database.createTransaction(transaction.getName(), transaction.getAmount(), transaction.getTime(), provider.getAccountId(account.getName()));
     }
 
@@ -75,11 +74,15 @@ public class DataInserter {
      *
      * @param account the account of the transaction
      * @param newValues the new values
-     * @param oldValues the old values
+     * @param oldValues the old values or null if the a new transaction is to be created
      */
-    public void updateTransaction(Account account, UniqueTransaction newValues, UniqueTransaction oldValues){
-        database.updateTransaction(newValues.getName(), newValues.getAmount(), newValues.getTime(),
-                oldValues.getName(), oldValues.getAmount(), oldValues.getTime(), provider.getAccountId(account.getName()));
+    public void transactionInput(Account account, Transaction newValues, Transaction oldValues){
+        if(oldValues != null && provider.getTransactionId(account, oldValues) != 0){
+            database.updateTransaction(newValues.getName(), newValues.getAmount(), newValues.getTime(),
+                    oldValues.getName(), oldValues.getAmount(), oldValues.getTime(), provider.getAccountId(account.getName()));
+        }else{
+            insertTransaction(account, newValues);
+        }
     }
 
     /**
@@ -88,7 +91,7 @@ public class DataInserter {
      * @param account the account of the transaction
      * @param transaction the transaction
      */
-    public void deleteTransaction(Account account, UniqueTransaction transaction){
+    public void deleteTransaction(Account account, Transaction transaction){
         database.deleteTransaction(provider.getTransactionId(account, transaction));
     }
 }

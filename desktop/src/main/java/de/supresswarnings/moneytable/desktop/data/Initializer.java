@@ -86,7 +86,7 @@ class Initializer {
                 createStatement.execute(statementPart + transactionTable + "(id INT AUTO_INCREMENT PRIMARY KEY, " +
                                                                                         "name VARCHAR(20) NOT NULL, " +
                                                                                         "amount DECIMAL(100,2) NOT NULL, " +
-                                                                                        "time INT NOT NULL, " +
+                                                                                        "time long NOT NULL, " +
                                                                                         "account INT NOT NULL, " +
                                                                                         "transactionGroup INT)");
             }

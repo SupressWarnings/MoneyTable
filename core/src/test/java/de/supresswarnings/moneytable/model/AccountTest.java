@@ -1,6 +1,7 @@
 package de.supresswarnings.moneytable.model;
 
-import de.supresswarnings.moneytable.model.transaction.UniqueTransaction;
+import de.supresswarnings.moneytable.model.transaction.Transaction;
+import de.supresswarnings.moneytable.model.transaction.TransactionFactory;
 import org.junit.Assert;
 import org.junit.Test;
 
@@ -16,7 +17,7 @@ public class AccountTest {
         Assert.assertEquals(name, account.getName());
         Assert.assertEquals(current, account.getBalance(), 0.0);
 
-        UniqueTransaction transaction = new UniqueTransaction("test",1.23d,  System.currentTimeMillis());
+        Transaction transaction = TransactionFactory.createTransaction("test",1.23d,  System.currentTimeMillis());
         account.add(transaction);
 
         Assert.assertEquals(transaction, account.getTransactions().get(0));
