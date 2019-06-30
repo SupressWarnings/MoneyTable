@@ -111,6 +111,7 @@ class Database {
             Main.LOGGER.log("INFO: Database initialization completed");
         } catch (SQLException e) {
             Main.LOGGER.logException("Error Code 601 (Database Connection error).", e);
+            Main.LOGGER.writeLog();
         }
         initialize();
     }
@@ -135,6 +136,7 @@ class Database {
             getTransaction = connection.prepareStatement("SELECT * FROM transaction WHERE id = ?");
         } catch (SQLException e) {
             Main.LOGGER.logException("ERROR: Code 602 (Preparing statements failed).", e);
+            Main.LOGGER.writeLog();
         }
     }
 
@@ -151,6 +153,7 @@ class Database {
             createAccount.execute();
         } catch (SQLException e) {
             Main.LOGGER.logException("ERROR: Code 603 (Creating account failed).", e);
+            Main.LOGGER.writeLog();
         }
     }
 
@@ -169,6 +172,7 @@ class Database {
             updateAccount.executeUpdate();
         } catch (SQLException e) {
             Main.LOGGER.logException("ERROR: Code 604 (Updating account failed).", e);
+            Main.LOGGER.writeLog();
         }
     }
 
@@ -182,6 +186,7 @@ class Database {
             deleteAccount.executeUpdate();
         } catch (SQLException e) {
             Main.LOGGER.logException("ERROR: Code 605 (Deleting account failed).", e);
+            Main.LOGGER.writeLog();
         }
     }
 
@@ -213,17 +218,20 @@ class Database {
         Account account = null;
         ResultSet set = null;
         try {
-            getAccountById.setInt(1, id);
-            set = getAccountById.executeQuery();
-            if(set.next()){
-                account = new Account(set.getString(2), set.getDouble(3));
-                for(Transaction transaction : getTransactions(set.getInt(1))){
-                    account.add(transaction);
+            if(id != -1){
+                getAccountById.setInt(1, id);
+                set = getAccountById.executeQuery();
+                if(set.next()){
+                    account = new Account(set.getString(2), set.getDouble(3));
+                    for(Transaction transaction : getTransactions(set.getInt(1))){
+                        account.add(transaction);
+                    }
                 }
+            }else{
+                Main.LOGGER.log("ERROR: Code xxx (Account id invalid)"); //todo
             }
         } catch (SQLException e) {
             Main.LOGGER.logException("ERROR: Code 607 (Loading account failed).", e);
-            System.err.println("ERROR CODE 607");
         }finally{
             try {
                 if(set!= null){
@@ -243,7 +251,7 @@ class Database {
      * @return the id of the account with this username
      */
     int getAccountId(String name){
-        int id = 0;
+        int id = -1;
         ResultSet set = null;
         try {
             getAccountByName.setString(1, name);
@@ -253,11 +261,11 @@ class Database {
             }
         } catch (SQLException e) {
             Main.LOGGER.logException("ERROR: Code 609 (Getting account id failed).", e);
-            System.err.println("ERROR CODE 608");
         }finally{
             try {
                 if(set!= null){
                     set.close();
+                    System.err.println("Result Set geschlossen");
                 }
             } catch (SQLException e) {
                 Main.LOGGER.logException("ERROR: Code 610 (Closing ResourceSet failed).", e);
@@ -397,12 +405,20 @@ class Database {
     Transaction getTransaction(long id){
         ResultSet set = null;
         try{
-            getTransaction.setLong(1, id);
-            set = getTransaction.executeQuery();
-            if(set.next()){
-                Transaction transaction = TransactionFactory.createTransaction(set.getString(2), set.getDouble(3), set.getLong(4));
-                transaction.setId(set.getInt(1));
-                return transaction;
+            if(id != -1){
+                getTransaction.setLong(1, id);
+                set = getTransaction.executeQuery();
+                if(set.next()){
+                    Transaction transaction = TransactionFactory.createTransaction(set.getString(2), set.getDouble(3), set.getLong(4));
+                    transaction.setId(set.getInt(1));
+                    return transaction;
+                }else{
+                    Main.LOGGER.log("ERROR: Code xxx");
+                    Main.LOGGER.log("Transaction not found");
+                }
+            }else{
+                Main.LOGGER.log("ERROR: Code xxx"); //todo
+                Main.LOGGER.log("Transaction id invalid");
             }
         } catch (SQLException e) {
             Main.LOGGER.logException("adsfa", e); //TODO
@@ -448,6 +464,7 @@ class Database {
     static void close(){
         if(database != null){
             database.dispose();
+            database = null;
         }
     }
 }
