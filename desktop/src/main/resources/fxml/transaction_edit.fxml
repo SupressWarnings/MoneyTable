@@ -10,111 +10,111 @@
 <?import javafx.scene.layout.RowConstraints?>
 <?import javafx.scene.text.Font?>
 
-<GridPane xmlns="http://javafx.com/javafx/8.0.172-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="de.supresswarnings.moneytable.desktop.ui.TransactionEditController">
+<GridPane xmlns="http://javafx.com/javafx/8.0.172-ea" xmlns:fx="http://javafx.com/fxml/1"
+          fx:controller="de.supresswarnings.moneytable.desktop.ui.TransactionEditController">
    <columnConstraints>
-      <ColumnConstraints />
-      <ColumnConstraints />
-      <ColumnConstraints />
+      <ColumnConstraints/>
+      <ColumnConstraints/>
+      <ColumnConstraints/>
    </columnConstraints>
    <rowConstraints>
-      <RowConstraints />
-      <RowConstraints />
-      <RowConstraints />
-      <RowConstraints />
+      <RowConstraints/>
+      <RowConstraints/>
+      <RowConstraints/>
+      <RowConstraints/>
    </rowConstraints>
-   <children>
-      <Label text="Name:">
-         <font>
-            <Font size="24.0" />
-         </font>
-         <padding>
-            <Insets bottom="32.0" left="32.0" right="32.0" top="32.0" />
-         </padding>
-      </Label>
-      <Label text="Amount:" GridPane.rowIndex="1">
-         <padding>
-            <Insets bottom="32.0" left="32.0" right="32.0" top="32.0" />
-         </padding>
-         <font>
-            <Font size="24.0" />
-         </font>
-      </Label>
-      <TextField fx:id="nameField" GridPane.columnIndex="1">
-         <font>
-            <Font size="24.0" />
-         </font>
-         <GridPane.margin>
-            <Insets bottom="32.0" left="32.0" right="32.0" top="32.0" />
-         </GridPane.margin>
-      </TextField>
-      <TextField fx:id="amountField" GridPane.columnIndex="1" GridPane.rowIndex="1">
-         <font>
-            <Font size="24.0" />
-         </font>
-         <GridPane.margin>
-            <Insets bottom="32.0" left="32.0" right="64.0" top="32.0" />
-         </GridPane.margin>
-      </TextField>
-      <Label text="Time:" GridPane.rowIndex="2">
-         <font>
-            <Font size="24.0" />
-         </font>
-         <GridPane.margin>
-            <Insets bottom="32.0" left="32.0" right="32.0" top="32.0" />
-         </GridPane.margin>
-      </Label>
-      <DatePicker fx:id="datePicker" GridPane.columnIndex="1" GridPane.rowIndex="2">
-         <GridPane.margin>
-            <Insets bottom="32.0" left="32.0" right="32.0" top="32.0" />
-         </GridPane.margin>
-      </DatePicker>
-      <Button fx:id="saveButton" mnemonicParsing="false" onAction="#onSaveClick" text="Create" GridPane.columnIndex="1" GridPane.halignment="RIGHT" GridPane.rowIndex="3">
-         <font>
-            <Font size="24.0" />
-         </font>
-         <GridPane.margin>
-            <Insets bottom="16.0" left="16.0" right="16.0" top="16.0" />
-         </GridPane.margin>
-      </Button>
-      <Label fx:id="nameErrorLabel" textFill="RED" GridPane.columnIndex="2">
-         <GridPane.margin>
-            <Insets bottom="32.0" left="32.0" right="32.0" top="32.0" />
-         </GridPane.margin>
-         <font>
-            <Font size="24.0" />
-         </font>
-      </Label>
-      <Label fx:id="amountErrorLabel" textFill="RED" GridPane.columnIndex="2" GridPane.rowIndex="1">
-         <GridPane.margin>
-            <Insets bottom="32.0" left="32.0" right="32.0" top="32.0" />
-         </GridPane.margin>
-         <font>
-            <Font size="24.0" />
-         </font>
-      </Label>
-      <Label fx:id="dateErrorLabel" textFill="RED" GridPane.columnIndex="2" GridPane.rowIndex="2">
-         <font>
-            <Font size="24.0" />
-         </font>
-         <GridPane.margin>
-            <Insets bottom="32.0" left="32.0" right="32.0" top="32.0" />
-         </GridPane.margin>
-      </Label>
-      <Label fx:id="combinationErrorLabel" prefWidth="320.0" textFill="RED" GridPane.columnIndex="2" GridPane.rowIndex="3">
-         <GridPane.margin>
-            <Insets bottom="32.0" left="32.0" right="32.0" top="32.0" />
-         </GridPane.margin>
-         <font>
-            <Font size="24.0" />
-         </font>
-      </Label>
-      <Label text="€" GridPane.columnIndex="1" GridPane.halignment="RIGHT" GridPane.rowIndex="1">
-         <GridPane.margin>
-            <Insets bottom="32.0" left="32.0" right="32.0" top="32.0" />
-         </GridPane.margin>
-         <font>
-            <Font size="24.0" />
-         </font>
-      </Label>
-   </children>
+   <Label text="Name:">
+      <font>
+         <Font size="24.0"/>
+      </font>
+      <padding>
+         <Insets bottom="32.0" left="32.0" right="32.0" top="32.0"/>
+      </padding>
+   </Label>
+   <Label text="Amount:" GridPane.rowIndex="1">
+      <padding>
+         <Insets bottom="32.0" left="32.0" right="32.0" top="32.0"/>
+      </padding>
+      <font>
+         <Font size="24.0"/>
+      </font>
+   </Label>
+   <TextField fx:id="nameField" GridPane.columnIndex="1">
+      <font>
+         <Font size="24.0"/>
+      </font>
+      <GridPane.margin>
+         <Insets bottom="32.0" left="32.0" right="32.0" top="32.0"/>
+      </GridPane.margin>
+   </TextField>
+   <TextField fx:id="amountField" GridPane.columnIndex="1" GridPane.rowIndex="1">
+      <font>
+         <Font size="24.0"/>
+      </font>
+      <GridPane.margin>
+         <Insets bottom="32.0" left="32.0" right="64.0" top="32.0"/>
+      </GridPane.margin>
+   </TextField>
+   <Label text="Time:" GridPane.rowIndex="2">
+      <font>
+         <Font size="24.0"/>
+      </font>
+      <GridPane.margin>
+         <Insets bottom="32.0" left="32.0" right="32.0" top="32.0"/>
+      </GridPane.margin>
+   </Label>
+   <DatePicker fx:id="datePicker" GridPane.columnIndex="1" GridPane.rowIndex="2">
+      <GridPane.margin>
+         <Insets bottom="32.0" left="32.0" right="32.0" top="32.0"/>
+      </GridPane.margin>
+   </DatePicker>
+   <Button fx:id="saveButton" mnemonicParsing="false" onAction="#onClickSave" text="Create" GridPane.columnIndex="1"
+           GridPane.halignment="RIGHT" GridPane.rowIndex="3">
+      <font>
+         <Font size="24.0"/>
+      </font>
+      <GridPane.margin>
+         <Insets bottom="16.0" left="16.0" right="16.0" top="16.0"/>
+      </GridPane.margin>
+   </Button>
+   <Label fx:id="nameErrorLabel" textFill="RED" GridPane.columnIndex="2">
+      <GridPane.margin>
+         <Insets bottom="32.0" left="32.0" right="32.0" top="32.0"/>
+      </GridPane.margin>
+      <font>
+         <Font size="24.0"/>
+      </font>
+   </Label>
+   <Label fx:id="amountErrorLabel" textFill="RED" GridPane.columnIndex="2" GridPane.rowIndex="1">
+      <GridPane.margin>
+         <Insets bottom="32.0" left="32.0" right="32.0" top="32.0"/>
+      </GridPane.margin>
+      <font>
+         <Font size="24.0"/>
+      </font>
+   </Label>
+   <Label fx:id="dateErrorLabel" textFill="RED" GridPane.columnIndex="2" GridPane.rowIndex="2">
+      <font>
+         <Font size="24.0"/>
+      </font>
+      <GridPane.margin>
+         <Insets bottom="32.0" left="32.0" right="32.0" top="32.0"/>
+      </GridPane.margin>
+   </Label>
+   <Label fx:id="combinationErrorLabel" prefWidth="320.0" textFill="RED" GridPane.columnIndex="2" GridPane.rowIndex="3">
+      <GridPane.margin>
+         <Insets bottom="32.0" left="32.0" right="32.0" top="32.0"/>
+      </GridPane.margin>
+      <font>
+         <Font size="24.0"/>
+      </font>
+   </Label>
+   <Label text="€" GridPane.columnIndex="1" GridPane.halignment="RIGHT" GridPane.rowIndex="1">
+      <GridPane.margin>
+         <Insets bottom="32.0" left="32.0" right="32.0" top="32.0"/>
+      </GridPane.margin>
+      <font>
+         <Font size="24.0"/>
+      </font>
+   </Label>
 </GridPane>

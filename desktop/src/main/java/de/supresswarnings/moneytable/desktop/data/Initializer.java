@@ -83,12 +83,11 @@ class Initializer {
             }
 
             if(tableNames.contains(transactionTable)){
-                createStatement.execute(statementPart + transactionTable + "(id INT AUTO_INCREMENT PRIMARY KEY, " +
+                createStatement.execute(statementPart + transactionTable + "(id INT PRIMARY KEY, " +
                                                                                         "name VARCHAR(20) NOT NULL, " +
                                                                                         "amount DECIMAL(100,2) NOT NULL, " +
                                                                                         "time long NOT NULL, " +
-                                                                                        "account INT NOT NULL, " +
-                                                                                        "transactionGroup INT)");
+                                                                                        "account INT NOT NULL)");
             }
             Main.LOGGER.log("INFO: Created all tables");
         } catch (SQLException e) {

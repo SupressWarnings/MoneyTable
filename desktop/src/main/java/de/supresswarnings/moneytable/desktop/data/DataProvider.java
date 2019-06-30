@@ -52,7 +52,11 @@ public class DataProvider {
      * @param transaction the transaction
      * @return the id of the transaction
      */
-    int getTransactionId(Account account, Transaction transaction){
+    long getTransactionId(Account account, Transaction transaction){
         return database.getTransactionId(transaction.getName(), transaction.getAmount(), transaction.getTime(), getAccountId(account.getName()));
+    }
+
+    Transaction getTransaction(long id){
+        return database.getTransaction(id);
     }
 }

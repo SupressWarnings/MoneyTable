@@ -1,5 +1,6 @@
 package de.supresswarnings.moneytable.desktop.data;
 
+import de.supresswarnings.moneytable.desktop.Main;
 import de.supresswarnings.moneytable.model.Account;
 import de.supresswarnings.moneytable.model.transaction.Transaction;
 import org.junit.Assert;
@@ -14,7 +15,7 @@ public class DatabaseTest {
         Database.getDatabase();
         Database database = Database.getDatabase();
         database.createAccount("database", 0.0d);
-        database.createTransaction("database", 0.1d, 1L,1);
+        database.createTransaction(1, "database", 0.1d, 1L,1);
 
         Account account = database.getAccount(database.getAccountId("database"));
         Assert.assertNotNull(account);
@@ -30,8 +31,8 @@ public class DatabaseTest {
         Assert.assertEquals("database2", account2.getName());
         Assert.assertEquals(0.1d, account2.getBalance(), 0.0d);
 
-        database.updateTransaction( "database2", 0.2d, 2L, "database", 0.1d, 1L, 1);
-        database.updateTransaction( "database2", 0.2d, 2L, "database", 0.1d, 1L, 1);// no transaction
+        database.updateTransaction( 1, "database2", 0.2d, 2L);
+        database.updateTransaction( 2, "database2", 0.2d, 2L);// no transaction
         ArrayList<Transaction> transactions = (ArrayList)database.getTransactions(1);
         Assert.assertFalse(transactions.isEmpty());
 
@@ -52,5 +53,6 @@ public class DatabaseTest {
 
         Database.close();
         Database.close();
+        Main.LOGGER.writeLog();
     }
 }

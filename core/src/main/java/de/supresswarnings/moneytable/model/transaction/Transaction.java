@@ -21,14 +21,17 @@ public class Transaction {
      */
     private long time;
 
+    /**
+     * The id of a Transaction ensures a stringent data system.
+     */
     private long id;
 
     /**
-     * Instantiates the class and sets the two basic values.
+     * Instantiates the class and sets the three base values.
      *
-     * @param name the name/reason of the transaction
-     * @param amount the amount of the transaction (negative for expenses, positive for income)
-     * @param time the time of the transaction
+     * @param name the name/reason of the Transaction
+     * @param amount the amount of the Transaction (negative for expenses, positive for income)
+     * @param time the time of the Transaction
      */
     Transaction(String name, double amount, long time, long id){
         setName(name);
@@ -40,7 +43,7 @@ public class Transaction {
     /**
      * Setter for the reason/name. Checks whether the name is valid and throws a {@link TransactionException} otherwise.
      *
-     * @param name The new reason/name of the transaction
+     * @param name The new reason/name of the Transaction
      */
     public void setName(String name){
         if(name == null){
@@ -53,7 +56,7 @@ public class Transaction {
 
     /**
      * Setter for the amount. Checks whether the amount is valid and throws a {@link TransactionException} otherwise.
-     * @param amount the new amount of the transaction
+     * @param amount the new amount of the Transaction
      */
     void setAmount(double amount) {
         if(amount == 0){
@@ -65,7 +68,7 @@ public class Transaction {
     /**
      * Getter for the reason/name.
      *
-     * @return the reason/name of the transaction
+     * @return the reason/name of the Transaction
      */
     public String getName() {
         return name;
@@ -74,7 +77,7 @@ public class Transaction {
     /**
      * Getter for the amount.
      *
-     * @return the amount of the transaction
+     * @return the amount of the Transaction
      */
     public double getAmount() {
         return amount;
@@ -85,14 +88,14 @@ public class Transaction {
      *
      * @return true when it is an income, false if it is an expense
      */
-    boolean isIncome() {
+    public boolean isIncome() {
         return amount > 0;
     }
 
     /**
      * Setter for the timestamp.
      *
-     * @param time the new time of the transaction
+     * @param time the new time of the Transaction
      */
     void setTime(long time) {
         this.time = time;
@@ -101,7 +104,7 @@ public class Transaction {
     /**
      * Getter for the timestamp.
      *
-     * @return the timestamp of the transaction
+     * @return the timestamp of the Transaction
      */
     public long getTime() {
         return time;
@@ -111,6 +114,11 @@ public class Transaction {
         return id;
     }
 
+    /**
+     * Sets the id. This method should only be used when Transactions are retrieved from the database.
+     *
+     * @param id the id of the Transaction
+     */
     public void setId(long id){
         this.id = id;
     }

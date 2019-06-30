@@ -92,6 +92,8 @@ class Database {
      */
     private PreparedStatement getTransactionId;
 
+    private PreparedStatement getTransaction;
+
     /**
      * The constructor of the class Database is private to prevent multiple instantiations of it.
      *
@@ -125,11 +127,12 @@ class Database {
             getAccountByName = connection.prepareStatement("SELECT * FROM account WHERE name = ?");
             getAccountById = connection.prepareStatement("SELECT * FROM account WHERE id = ?");
 
-            createTransaction = connection.prepareStatement("INSERT INTO transaction VALUES(DEFAULT, ?, ?, ?, ?, NULL)");
+            createTransaction = connection.prepareStatement("INSERT INTO transaction VALUES(?, ?, ?, ?, ?)");
             updateTransaction = connection.prepareStatement("UPDATE transaction SET name = ?, amount = ?, time = ? WHERE id = ?");
             deleteTransaction = connection.prepareStatement("DELETE FROM transaction WHERE id = ?");
             getTransactionsByAccount = connection.prepareStatement("SELECT * FROM transaction WHERE account = ?");
             getTransactionId = connection.prepareStatement("SELECT id FROM transaction WHERE name = ? AND amount = ? AND time = ? AND account = ?");
+            getTransaction = connection.prepareStatement("SELECT * FROM transaction WHERE id = ?");
         } catch (SQLException e) {
             Main.LOGGER.logException("ERROR: Code 602 (Preparing statements failed).", e);
         }
@@ -271,12 +274,13 @@ class Database {
      * @param time the timestamp of the transaction
      * @param account every transaction is linked to an account by id
      */
-    void createTransaction(String name, double amount, long time, int account){
+    void createTransaction(long id, String name, double amount, long time, int account){
         try {
-            createTransaction.setString(1, name);
-            createTransaction.setDouble(2, amount);
-            createTransaction.setLong(3, time);
-            createTransaction.setInt(4, account);
+            createTransaction.setLong(1, id);
+            createTransaction.setString(2, name);
+            createTransaction.setDouble(3, amount);
+            createTransaction.setLong(4, time);
+            createTransaction.setInt(5, account);
             createTransaction.execute();
         } catch (SQLException e) {
             Main.LOGGER.logException("ERROR: Code 611 (Creating transaction failed).", e);
@@ -289,22 +293,17 @@ class Database {
      * @param name the new reason/name of the transaction
      * @param amount the new amount of the transaction
      * @param time the new time of the transaction
-     * @param oldName the old reason/name of the transaction
-     * @param oldAmount the old amount of the transaction
-     * @param oldTime the old time of the transaction
-     * @param accountId the id of the account the transaction is connected to
      */
-    void updateTransaction(String name, double amount, long time,  String oldName, double oldAmount, long oldTime, int accountId){
+    void updateTransaction(long id, String name, double amount, long time){
         try {
-            if(getTransactionId(oldName, oldAmount, oldTime, accountId) != 0){
+            if(getTransaction(id) != null){
                 updateTransaction.setString(1, name);
                 updateTransaction.setDouble(2, amount);
                 updateTransaction.setLong(3, time);
-                updateTransaction.setInt(4, getTransactionId(oldName, oldAmount, oldTime, accountId));
+                updateTransaction.setLong(4, id);
                 updateTransaction.executeUpdate();
             }else{
                 Main.LOGGER.log("ERROR: Code 612 (Updated transaction does not exist).");
-                Main.LOGGER.writeLog();
             }
         } catch (SQLException e) {
             Main.LOGGER.logException("ERROR: Code 613 (Updating transaction failed).", e);
@@ -316,9 +315,9 @@ class Database {
      *
      * @param id the id of the transaction that will be deleted
      */
-    void deleteTransaction(int id){
+    void deleteTransaction(long id){
         try {
-            deleteTransaction.setInt(1, id);
+            deleteTransaction.setLong(1, id);
             deleteTransaction.executeUpdate();
         } catch (SQLException e) {
             Main.LOGGER.logException("ERROR: Code 614 (Deleting transaction failed).", e);
@@ -331,14 +330,16 @@ class Database {
      * @param accountId the id of the account
      * @return an {@link ArrayList} containing all Transactions in the Database that are affiliated with this account
      */
-    List<Transaction> getTransactions(int accountId){
+    List<Transaction> getTransactions(long accountId){
         ArrayList<Transaction> transactions = new ArrayList<>();
         ResultSet set = null;
         try {
-            getTransactionsByAccount.setInt(1, accountId);
+            getTransactionsByAccount.setLong(1, accountId);
             set = getTransactionsByAccount.executeQuery();
             while(set.next()){
-                transactions.add(TransactionFactory.createTransaction(set.getString(2), set.getDouble(3), set.getLong(4)));
+                Transaction transaction = TransactionFactory.createTransaction(set.getString(2), set.getDouble(3), set.getLong(4));
+                transaction.setId(set.getInt(1));
+                transactions.add(transaction);
             }
         } catch (SQLException e) {
             Main.LOGGER.logException("ERROR: Code 615 (Transaction call failed).", e);
@@ -361,10 +362,11 @@ class Database {
      * @param amount the amount of the transaction
      * @param time the timestamp of the transaction
      * @param accountId the id of the account of the transaction
-     * @return the id of the transaction with the specified information
+     *
+     * @return the id of the transaction with the specified information or -1 if the transaction does not exist
      */
-    int getTransactionId(String name, double amount, long time, int accountId){
-        int id = 0;
+    long getTransactionId(String name, double amount, long time, int accountId){
+        int id = -1;
         ResultSet set = null;
         try {
             getTransactionId.setString(1, name);
@@ -388,6 +390,30 @@ class Database {
             }
         }
         return id;
+    }
+
+    Transaction getTransaction(long id){
+        ResultSet set = null;
+        try{
+            getTransaction.setLong(1, id);
+            set = getTransaction.executeQuery();
+            if(set.next()){
+                Transaction transaction = TransactionFactory.createTransaction(set.getString(2), set.getDouble(3), set.getLong(4));
+                transaction.setId(set.getInt(1));
+                return transaction;
+            }
+        } catch (SQLException e) {
+            Main.LOGGER.logException("adsfa", e); //TODO
+        }finally {
+            if(set != null){
+                try {
+                    set.close();
+                } catch (SQLException e) {
+                    Main.LOGGER.logException("asdfa", e); //TODO
+                }
+            }
+        }
+        return null;
     }
 
     /**

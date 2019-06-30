@@ -1,22 +1,15 @@
 package de.supresswarnings.moneytable.desktop.ui;
 
-import de.supresswarnings.moneytable.desktop.Main;
 import de.supresswarnings.moneytable.desktop.data.DataInserter;
 import de.supresswarnings.moneytable.model.Account;
 import de.supresswarnings.moneytable.model.transaction.Transaction;
-
 import de.supresswarnings.moneytable.model.transaction.TransactionFactory;
 import javafx.fxml.FXML;
-import javafx.fxml.FXMLLoader;
-import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.DatePicker;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
-import javafx.stage.Stage;
 
-import java.io.IOException;
-import java.text.DecimalFormat;
 import java.time.LocalDate;
 import java.util.Calendar;
 import java.util.Date;
@@ -24,9 +17,13 @@ import java.util.GregorianCalendar;
 
 public class TransactionEditController {
 
-    private Transaction oldValues;
+    private long id = -1;
 
     private Account account;
+
+    private boolean creation = true;
+
+    private BaseSceneController baseSceneController;
 
     @FXML
     private TextField nameField;
@@ -53,40 +50,44 @@ public class TransactionEditController {
     private Label combinationErrorLabel;
 
     @FXML
-    private void onSaveClick(){
+    private void onClickSave(){
         nameErrorLabel.setText("");
         amountErrorLabel.setText("");
         dateErrorLabel.setText("");
         combinationErrorLabel.setText("");
 
         if(checkName() && checkAmount() && checkDate() && checkCombination()){
+            // Retrieve data
             String name = nameField.getText();
+
             double amount = Double.parseDouble(amountField.getText().replaceAll(",", "."));
-            DecimalFormat df = new DecimalFormat("#.##");
-            amount = Double.parseDouble(df.format(amount));
+            amount = ((double)((int)(amount *100.0)))/100.0;
+
             long time = datePicker.getValue().toEpochDay()*24*60*60*1000;
+
+            //Create the Transaction
             Transaction newValues = TransactionFactory.createTransaction(name, amount, time);
-
-            DataInserter inserter = new DataInserter();
-            inserter.transactionInput(account, newValues, oldValues);
-
-            Stage primaryStage = (Stage)saveButton.getScene().getWindow();
-            FXMLLoader loader = new FXMLLoader(getClass().getClassLoader().getResource("./fxml/transaction.fxml"));
-            try {
-                primaryStage.setScene(new Scene(loader.load()));
-            } catch (IOException e) {
-                Main.LOGGER.logException("ERROR: Code 801 (Failed to return to transaction view).", e);
+            if(id != -1){
+                newValues.setId(id);
+            }else{
+                account.add(newValues);
             }
-            TransactionController transactionController = loader.getController();
-            transactionController.initData(newValues, account);
+
+            // Save the Transaction
+            DataInserter inserter = new DataInserter();
+            inserter.transactionInput(account, newValues);
+
+            // Navigate to Transaction view
+            baseSceneController.showTransaction(newValues);
         }
     }
 
-    void initData(Transaction transaction, Account account){
+    void initData(Transaction transaction, Account account, BaseSceneController baseSceneController){
         this.account = account;
+        this.baseSceneController = baseSceneController;
 
         if(transaction != null){
-            oldValues = transaction;
+            creation = false;
             saveButton.setText("Save");
 
             nameField.setText(transaction.getName());
@@ -96,6 +97,10 @@ public class TransactionEditController {
             Calendar calendar = new GregorianCalendar();
             calendar.setTime(date);
             datePicker.setValue(LocalDate.of(calendar.get(Calendar.YEAR), calendar.get(Calendar.MONTH) + 1, calendar.get(Calendar.DAY_OF_MONTH)));
+
+            id = transaction.getId();
+        }else{
+            creation = true;
         }
     }
 
@@ -112,7 +117,7 @@ public class TransactionEditController {
         String amount = amountField.getText();
         if( amount == null ) return false;
         try {
-            Double.parseDouble(amount);
+            Double.parseDouble(amountField.getText().replaceAll(",", "."));
             return true;
         } catch (NumberFormatException e) {
             amountErrorLabel.setText("Please enter a correct amount.");
@@ -131,8 +136,12 @@ public class TransactionEditController {
 
     private boolean checkCombination(){
         String name = nameField.getText();
-        double amount = Double.parseDouble(amountField.getText());
+
+        double amount = Double.parseDouble(amountField.getText().replaceAll(",", "."));
+        amount = ((double)((int)(amount *100.0)))/100.0;
+
         long time = datePicker.getValue().toEpochDay()*24*60*60*1000;
+
         boolean exists = false;
         for(Transaction transaction : account.getTransactions()){
             if(name.equals(transaction.getName()) && amount == transaction.getAmount() && time == transaction.getTime()){
@@ -142,7 +151,7 @@ public class TransactionEditController {
         if(!exists){
             return true;
         }else{
-            combinationErrorLabel.setText("This transaction already exists");
+            combinationErrorLabel.setText("This transaction exists already");
             return false;
         }
     }

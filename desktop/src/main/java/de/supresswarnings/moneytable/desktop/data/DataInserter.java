@@ -37,7 +37,7 @@ public class DataInserter {
      * @param transaction the transaction that will be saved
      */
     public void insertTransaction(Account account, Transaction transaction){
-        database.createTransaction(transaction.getName(), transaction.getAmount(), transaction.getTime(), provider.getAccountId(account.getName()));
+        database.createTransaction(transaction.getId(), transaction.getName(), transaction.getAmount(), transaction.getTime(), provider.getAccountId(account.getName()));
     }
 
     /**
@@ -74,12 +74,10 @@ public class DataInserter {
      *
      * @param account the account of the transaction
      * @param newValues the new values
-     * @param oldValues the old values or null if the a new transaction is to be created
      */
-    public void transactionInput(Account account, Transaction newValues, Transaction oldValues){
-        if(oldValues != null && provider.getTransactionId(account, oldValues) != 0){
-            database.updateTransaction(newValues.getName(), newValues.getAmount(), newValues.getTime(),
-                    oldValues.getName(), oldValues.getAmount(), oldValues.getTime(), provider.getAccountId(account.getName()));
+    public void transactionInput(Account account, Transaction newValues){
+        if(newValues != null && provider.getTransaction(newValues.getId()) != null){
+            database.updateTransaction(newValues.getId(), newValues.getName(), newValues.getAmount(), newValues.getTime());
         }else{
             insertTransaction(account, newValues);
         }
@@ -92,6 +90,6 @@ public class DataInserter {
      * @param transaction the transaction
      */
     public void deleteTransaction(Account account, Transaction transaction){
-        database.deleteTransaction(provider.getTransactionId(account, transaction));
+        database.deleteTransaction(transaction.getId());
     }
 }

@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.layout.ColumnConstraints?>
+<?import javafx.scene.layout.GridPane?>
+<?import javafx.scene.layout.RowConstraints?>
+<?import javafx.scene.text.Font?>
+
+<GridPane alignment="CENTER" xmlns="http://javafx.com/javafx/8.0.172-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="de.supresswarnings.moneytable.desktop.ui.AccountInfoController">
+    <columnConstraints>
+        <ColumnConstraints />
+        <ColumnConstraints />
+    </columnConstraints>
+    <rowConstraints>
+        <RowConstraints />
+        <RowConstraints />
+        <RowConstraints />
+      <RowConstraints />
+    </rowConstraints>
+    <Label text="Account Info" GridPane.columnSpan="2147483647">
+        <font>
+          <Font size="36.0" />
+        </font>
+        <GridPane.margin>
+          <Insets bottom="32.0" left="32.0" right="32.0" top="32.0" />
+        </GridPane.margin>
+    </Label>
+    <Label text="Name:" GridPane.rowIndex="1">
+        <GridPane.margin>
+          <Insets bottom="32.0" left="32.0" right="32.0" top="32.0" />
+        </GridPane.margin>
+        <font>
+          <Font size="24.0" />
+        </font>
+    </Label>
+    <Label fx:id="name" text="&lt;name&gt;" GridPane.columnIndex="1" GridPane.rowIndex="1">
+        <GridPane.margin>
+          <Insets bottom="32.0" left="32.0" right="32.0" top="32.0" />
+        </GridPane.margin>
+        <font>
+          <Font size="24.0" />
+        </font>
+    </Label>
+    <Label text="Balance:" GridPane.rowIndex="2">
+        <GridPane.margin>
+          <Insets bottom="32.0" left="32.0" right="32.0" top="32.0" />
+        </GridPane.margin>
+        <font>
+          <Font size="24.0" />
+        </font>
+    </Label>
+    <Label fx:id="balance" text="&lt;balance&gt;" GridPane.columnIndex="1" GridPane.rowIndex="2">
+        <GridPane.margin>
+          <Insets bottom="32.0" left="32.0" right="32.0" top="32.0" />
+        </GridPane.margin>
+        <font>
+          <Font size="24.0" />
+        </font>
+    </Label>
+   <Label alignment="CENTER" text="Transactions:" GridPane.rowIndex="3">
+      <font>
+         <Font size="24.0" />
+      </font>
+      <GridPane.margin>
+         <Insets bottom="32.0" left="32.0" right="32.0" top="32.0" />
+      </GridPane.margin>
+   </Label>
+   <Label fx:id="transactions" text="&lt;transactions" GridPane.columnIndex="1" GridPane.rowIndex="3">
+      <font>
+         <Font size="24.0" />
+      </font>
+      <GridPane.margin>
+         <Insets bottom="32.0" left="32.0" right="32.0" top="32.0" />
+      </GridPane.margin>
+   </Label>
+</GridPane>

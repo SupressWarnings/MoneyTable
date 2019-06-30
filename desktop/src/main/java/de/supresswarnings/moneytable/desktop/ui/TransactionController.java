@@ -1,16 +1,10 @@
 package de.supresswarnings.moneytable.desktop.ui;
 
-import de.supresswarnings.moneytable.desktop.Main;
 import de.supresswarnings.moneytable.model.Account;
 import de.supresswarnings.moneytable.model.transaction.Transaction;
 import javafx.fxml.FXML;
-import javafx.fxml.FXMLLoader;
-import javafx.scene.Scene;
-import javafx.scene.control.Button;
 import javafx.scene.control.Label;
-import javafx.stage.Stage;
 
-import java.io.IOException;
 import java.text.DecimalFormat;
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -19,10 +13,8 @@ import java.util.Date;
 public class TransactionController {
 
     private Transaction transaction;
-    private Account account;
 
-    @FXML
-    private Button editButton;
+    private BaseSceneController baseSceneController;
 
     @FXML
     private Label nameLabel;
@@ -34,26 +26,23 @@ public class TransactionController {
     private Label dateLabel;
 
     @FXML
-    private void onEditClick(){
-        Stage primaryStage = (Stage)editButton.getScene().getWindow();
-        FXMLLoader loader = new FXMLLoader(getClass().getClassLoader().getResource("./fxml/transaction_edit.fxml"));
-        try {
-            primaryStage.setScene(new Scene(loader.load()));
-        } catch (IOException e) {
-            Main.LOGGER.logException("ERROR: Code 701 (Failed to show transaction edit view).", e);
-        }
-        TransactionEditController transactionEditController = loader.getController();
-        transactionEditController.initData(transaction, account);
+    private void onClickEdit(){
+        baseSceneController.editTransaction(transaction);
     }
 
-    void initData(Transaction transaction, Account account){
-        this.account = account;
+    @FXML
+    private void returnToList(){
+        baseSceneController.showTransactionList();
+    }
+
+    void initData(Transaction transaction, BaseSceneController baseSceneController){
         this.transaction = transaction;
+        this.baseSceneController = baseSceneController;
 
         nameLabel.setText(transaction.getName());
 
         DecimalFormat format = new DecimalFormat("0.00");
-        String amount = format.format(transaction.getAmount()) + " €";
+        String amount = format.format(transaction.getAmount()) + " \u20AC";
         amountLabel.setText(amount);
 
         Date date = new Date(transaction.getTime());
