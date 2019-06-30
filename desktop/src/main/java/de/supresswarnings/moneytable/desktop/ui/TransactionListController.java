@@ -16,7 +16,7 @@ public class TransactionListController {
     private ListView<Transaction> listView;
 
     @FXML
-    private ChoiceBox sort;
+    private ChoiceBox<String> sort;
 
     private ObservableList<Transaction> transactionObservableList;
 
@@ -43,7 +43,7 @@ public class TransactionListController {
     }
 
     private void changeSort(){
-        switch ((String)sort.getValue()){
+        switch (sort.getValue()){
             case "Name":
                 transactionObservableList.sort(Comparator.comparing(Transaction::getName));break;
             case "Smallest Amount":

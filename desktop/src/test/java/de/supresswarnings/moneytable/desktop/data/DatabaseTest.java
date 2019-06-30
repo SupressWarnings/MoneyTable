@@ -33,7 +33,7 @@ public class DatabaseTest {
 
         database.updateTransaction( 1, "database2", 0.2d, 2L);
         database.updateTransaction( 2, "database2", 0.2d, 2L);// no transaction
-        ArrayList<Transaction> transactions = (ArrayList)database.getTransactions(1);
+        ArrayList<Transaction> transactions = (ArrayList<Transaction>)database.getTransactions(1);
         Assert.assertFalse(transactions.isEmpty());
 
         boolean contains = false;
