@@ -22,3 +22,9 @@ javafx {
     modules = [ 'javafx.controls', 'javafx.fxml' ]
 }
 mainClassName='$moduleName/de.supresswarnings.moneytable.Main'
+test {
+    testLogging{
+        events "failed"
+        exceptionFormat "full"
+    }
+}

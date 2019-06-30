@@ -223,6 +223,7 @@ class Database {
             }
         } catch (SQLException e) {
             Main.LOGGER.logException("ERROR: Code 607 (Loading account failed).", e);
+            System.err.println("ERROR CODE 607");
         }finally{
             try {
                 if(set!= null){
@@ -252,6 +253,7 @@ class Database {
             }
         } catch (SQLException e) {
             Main.LOGGER.logException("ERROR: Code 609 (Getting account id failed).", e);
+            System.err.println("ERROR CODE 608");
         }finally{
             try {
                 if(set!= null){
