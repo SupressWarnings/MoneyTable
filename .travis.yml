@@ -10,9 +10,9 @@ addons:
           secure: ${SONAR_TOKEN}
 
 script:
-    - gradle assemble
-    - gradle check
-    - gradle codeCoverageReport
+    - ./gradlew assemble
+    - ./gradlew check
+    - ./gradlew codeCoverageReport
     - sonar-scanner
 
 before_cache:
