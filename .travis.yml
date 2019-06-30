@@ -1,5 +1,5 @@
 language: java
-jdk: openjdk10
+jdk: oraclejdk8
 
 install: gradle wrapper --gradle-version 5.0
 
@@ -28,4 +28,4 @@ cache:
         - $HOME/.gradle/wrapper/
 
 notifications:
-email: false
+  email: false
