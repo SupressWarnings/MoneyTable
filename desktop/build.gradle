@@ -1,3 +1,7 @@
+plugins{
+    id 'application'
+    id 'org.openjfx.javafxplugin' version '0.0.7'
+}
 apply plugin: 'java'
 
 repositories {
@@ -12,3 +16,9 @@ dependencies {
     compile group: 'com.h2database', name: 'h2', version: '1.3.148'
     compile project(':core')
 }
+
+javafx {
+    version = "12"
+    modules = [ 'javafx.controls', 'javafx.fxml' ]
+}
+mainClassName='$moduleName/de.supresswarnings.moneytable.Main'

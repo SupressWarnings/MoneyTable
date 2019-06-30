@@ -1,5 +1,5 @@
 language: java
-jdk: openjdk8
+jdk: openjdk12
 
 install: gradle wrapper --gradle-version 5.0
 
@@ -14,9 +14,6 @@ script:
     - gradle check
     - gradle codeCoverageReport
     - sonar-scanner
-
-after_success:
-  - bash <(curl -s https://codecov.io/bash)
 
 before_cache:
     - rm -f  $HOME/.gradle/caches/modules-2/modules-2.lock
