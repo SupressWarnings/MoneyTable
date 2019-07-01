@@ -5,20 +5,17 @@ import de.supresswarnings.moneytable.model.Account;
 import de.supresswarnings.moneytable.model.transaction.Transaction;
 import org.junit.*;
 
-import java.io.File;
 import java.util.ArrayList;
 
 public class DatabaseTest {
 
     @BeforeClass
     public static void init(){
-        // Delete the existing Database for the tests
-        String path = System.getProperty("user.home") + "/.moneytable/database.h2.db";
-        File file = new File(path);
-        file.delete();
-
         // Create the database
         Database database = Database.getDatabase();
+        //Clear old data
+        database.deleteAccount(1);
+        database.deleteTransaction(1);
         //Enter data
         database.createAccount("test", 0.1d);
         database.createTransaction(1L, "test", 0.5d, 15L, 1);

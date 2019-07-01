@@ -27,17 +27,16 @@ public class BaseSceneController {
 
     void showTransactionList(){
         accountInfoController.initData(account);
-        HBox root = null;
+        HBox transactionList = null;
         FXMLLoader loader = new FXMLLoader(getClass().getClassLoader().getResource("./fxml/transaction_list.fxml"));
         try {
-            root = loader.load();
+            transactionList = loader.load();
         } catch (IOException e) {
-            Main.LOGGER.logException("bla bla bla", e);
-            Main.LOGGER.writeLog();
+            Main.LOGGER.logException("ERROR: Code <> (Transaction List not loading properly)", e); //todo add error code
         }
         TransactionListController transactionListController = loader.getController();
         transactionListController.initData(account, this);
-        centerPane.getChildren().add(root);
+        centerPane.getChildren().add(transactionList);
     }
 
     void showTransaction(Transaction transaction){
@@ -46,7 +45,7 @@ public class BaseSceneController {
         try {
             transactionPane = loader.load();
         } catch (IOException e) {
-            e.printStackTrace();
+            Main.LOGGER.logException("ERROR: Code <> (Transaction Pane does not load properly)", e); //todo add error code
         }
         TransactionController transactionController = loader.getController();
         transactionController.initData(transaction, this);
@@ -60,7 +59,7 @@ public class BaseSceneController {
         try {
             editPane = loader.load();
         } catch (IOException e) {
-            Main.LOGGER.logException("bla", e); //todo
+            Main.LOGGER.logException("ERROR: Code <> (Edit Pane does not load properly)", e); //todo add error code
         }
         TransactionEditController transactionEditController = loader.getController();
         transactionEditController.initData(transaction, account, this);

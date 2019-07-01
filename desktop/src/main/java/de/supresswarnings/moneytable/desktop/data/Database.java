@@ -178,6 +178,7 @@ class Database {
 
     /**
      * Deletes an account from the Database.
+     *
      * @param id the id of the account that will be deleted
      */
     void deleteAccount(int id){
@@ -228,7 +229,7 @@ class Database {
                     }
                 }
             }else{
-                Main.LOGGER.log("ERROR: Code xxx (Account id invalid)"); //todo
+                Main.LOGGER.log("ERROR: Code <> (Account id invalid)"); //todo add error code
             }
         } catch (SQLException e) {
             Main.LOGGER.logException("ERROR: Code 607 (Loading account failed).", e);
@@ -265,7 +266,6 @@ class Database {
             try {
                 if(set!= null){
                     set.close();
-                    System.err.println("Result Set geschlossen");
                 }
             } catch (SQLException e) {
                 Main.LOGGER.logException("ERROR: Code 610 (Closing ResourceSet failed).", e);
@@ -413,21 +413,19 @@ class Database {
                     transaction.setId(set.getInt(1));
                     return transaction;
                 }else{
-                    Main.LOGGER.log("ERROR: Code xxx");
-                    Main.LOGGER.log("Transaction not found");
+                    Main.LOGGER.log("ERROR: Code <> (Transaction not found)"); //todo add error code
                 }
             }else{
-                Main.LOGGER.log("ERROR: Code xxx"); //todo
-                Main.LOGGER.log("Transaction id invalid");
+                Main.LOGGER.log("ERROR: Code <> (Transaction id invalid)"); //todo add error code
             }
         } catch (SQLException e) {
-            Main.LOGGER.logException("adsfa", e); //TODO
+            Main.LOGGER.logException("ERROR: Code <> (Retrieving transaction failed)", e); //TODO add error code
         }finally {
             if(set != null){
                 try {
                     set.close();
                 } catch (SQLException e) {
-                    Main.LOGGER.logException("asdfa", e); //TODO
+                    Main.LOGGER.logException("ERROR: Code <> (Closing Result Set failed)", e); //TODO add error code
                 }
             }
         }
