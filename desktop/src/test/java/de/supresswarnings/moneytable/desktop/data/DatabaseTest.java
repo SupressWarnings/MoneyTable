@@ -14,7 +14,6 @@ public class DatabaseTest {
         // Create the database
         Database database = Database.getDatabase();
         //Clear old data
-        database.deleteAccount(1);
         database.deleteTransaction(1);
         //Enter data
         database.createAccount("test", 0.1d);

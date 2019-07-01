@@ -1,6 +1,5 @@
 package de.supresswarnings.moneytable.desktop.ui;
 
-import de.supresswarnings.moneytable.model.Account;
 import de.supresswarnings.moneytable.model.transaction.Transaction;
 import javafx.fxml.FXML;
 import javafx.scene.control.Label;

@@ -27,7 +27,7 @@ public class TransactionFactory {
     /**
      * Sets the id that the next transaction will have
      *
-     * @param newId
+     * @param newId the id the next Transaction will have
      */
     public static void setId(long newId){
         id = newId;

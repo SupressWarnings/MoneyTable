@@ -21,8 +21,6 @@ public class TransactionEditController {
 
     private Account account;
 
-    private boolean creation = true;
-
     private BaseSceneController baseSceneController;
 
     @FXML
@@ -87,7 +85,6 @@ public class TransactionEditController {
         this.baseSceneController = baseSceneController;
 
         if(transaction != null){
-            creation = false;
             saveButton.setText("Save");
 
             nameField.setText(transaction.getName());
@@ -99,8 +96,6 @@ public class TransactionEditController {
             datePicker.setValue(LocalDate.of(calendar.get(Calendar.YEAR), calendar.get(Calendar.MONTH) + 1, calendar.get(Calendar.DAY_OF_MONTH)));
 
             id = transaction.getId();
-        }else{
-            creation = true;
         }
     }
 
